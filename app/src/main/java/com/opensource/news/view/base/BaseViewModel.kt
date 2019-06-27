@@ -1,4 +1,4 @@
-package com.opensource.news
+package com.opensource.news.view.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 /**
  * @author Dhruvaraj Nagarajan
  */
-abstract class BaseViewModel : ViewModel() {
+open class BaseViewModel : ViewModel() {
 
     val viewStateLiveData = MutableLiveData<ViewState>()
 
@@ -15,15 +15,29 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     protected fun postSuccessViewState(message: String? = null) {
-        viewStateLiveData.postValue(ViewState(ViewStateType.NONE, message))
+        viewStateLiveData.postValue(
+            ViewState(
+                ViewStateType.NONE,
+                message
+            )
+        )
     }
 
     protected fun postLoadingViewState(message: String? = null) {
-        viewStateLiveData.postValue(ViewState(ViewStateType.LOADING, message))
+        // using set value to immediately show loading UI
+        viewStateLiveData.value = ViewState(
+            ViewStateType.LOADING,
+            message
+        )
     }
 
     protected fun postErrorViewState(message: String?) {
-        viewStateLiveData.postValue(ViewState(ViewStateType.ERROR, message))
+        viewStateLiveData.postValue(
+            ViewState(
+                ViewStateType.ERROR,
+                message
+            )
+        )
     }
 
     data class ViewState(val viewStateType: ViewStateType, var message: String? = null)

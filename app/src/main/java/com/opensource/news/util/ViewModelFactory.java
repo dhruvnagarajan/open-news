@@ -1,4 +1,4 @@
-package com.opensource.news;
+package com.opensource.news.util;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

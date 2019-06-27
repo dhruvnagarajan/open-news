@@ -1,4 +1,4 @@
-package com.opensource.news.di
+package com.opensource.news.di.module
 
 import com.google.gson.Gson
 import com.opensource.news.BuildConfig
@@ -29,7 +29,7 @@ class NetworkModule {
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor? {
         if (!BuildConfig.DEBUG) return null
         val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+//        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return loggingInterceptor
     }
 

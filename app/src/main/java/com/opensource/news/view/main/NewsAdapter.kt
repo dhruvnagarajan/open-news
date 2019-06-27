@@ -1,4 +1,4 @@
-package com.opensource.news.main
+package com.opensource.news.view.main
 
 import android.view.LayoutInflater
 import android.view.View

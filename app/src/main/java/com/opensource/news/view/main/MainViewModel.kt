@@ -1,8 +1,8 @@
-package com.opensource.news.main
+package com.opensource.news.view.main
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
-import com.opensource.news.BaseViewModel
+import com.opensource.news.view.base.BaseViewModel
 import com.opensource.news.domain.model.NewsResponse
 import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers

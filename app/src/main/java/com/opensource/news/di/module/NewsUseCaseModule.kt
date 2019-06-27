@@ -1,4 +1,4 @@
-package com.opensource.news.di
+package com.opensource.news.di.module
 
 import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
 import dagger.Module

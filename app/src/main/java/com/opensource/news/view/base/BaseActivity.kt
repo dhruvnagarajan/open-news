@@ -1,29 +1,31 @@
-package com.opensource.news
+package com.opensource.news.view.base
 
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
-import dagger.android.support.DaggerAppCompatActivity
+import com.opensource.news.util.showToast
+import com.opensource.news.view.progressbottomsheet.ViewStateDialog
+import javax.inject.Inject
 
 
 /**
  * @author Dhruvaraj Nagarajan
  */
-abstract class BaseActivity<T : BaseViewModel> : DaggerAppCompatActivity() {
+abstract class BaseActivity<T : BaseViewModel> : DaggerXActivity() {
+
+    @Inject
+    lateinit var viewStateDialog: ViewStateDialog
 
     lateinit var viewModel: T
-
-    private var alertDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
         viewModel = provideViewModel()
         onCreateView()
-    }
 
-    override fun onStart() {
-        super.onStart()
+        // all observers have to use LiveData
+        // since LiveData is LifeCycle aware, we can observe it once here
+        // otherwise we would've done it only during visibility
         observeViewState()
         onAttachObservers()
     }
@@ -44,8 +46,7 @@ abstract class BaseActivity<T : BaseViewModel> : DaggerAppCompatActivity() {
                 }
                 BaseViewModel.ViewStateType.LOADING -> {
                     hideError()
-                    showLoading()
-                    it.message?.let { message -> showToast(message) }
+                    showLoading(it.message)
                 }
                 BaseViewModel.ViewStateType.ERROR -> {
                     hideLoading()
@@ -57,21 +58,19 @@ abstract class BaseActivity<T : BaseViewModel> : DaggerAppCompatActivity() {
 
     abstract fun onAttachObservers()
 
-    open fun showError(message: String?) {
-        message?.let { showToast(it) }
-    }
-
-    open fun hideError() {}
-
     open fun showLoading(message: String? = null) {
-        if (alertDialog?.isShowing == false)
-            alertDialog = AlertDialog.Builder(this)
-                .setMessage(message ?: "Loading...")
-                .show()
+        viewStateDialog.showLoading(message)
     }
 
     open fun hideLoading() {
-        if (alertDialog?.isShowing == true)
-            alertDialog?.dismiss()
+        viewStateDialog.dismiss()
+    }
+
+    open fun showError(message: String?) {
+        viewStateDialog.showError(message)
+    }
+
+    open fun hideError() {
+        viewStateDialog.dismiss()
     }
 }
