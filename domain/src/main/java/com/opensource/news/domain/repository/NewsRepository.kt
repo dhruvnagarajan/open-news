@@ -2,7 +2,7 @@ package com.opensource.news.domain.repository
 
 import com.opensource.news.domain.model.BaseResponse
 import com.opensource.news.domain.model.NewsResponse
-import com.opensource.news.domain.usecase.GetTopHeadlines
+import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
 import io.reactivex.Observable
 
 /**
@@ -10,5 +10,5 @@ import io.reactivex.Observable
  */
 interface NewsRepository {
 
-    fun getTopHeadlines(params: GetTopHeadlines.Params): Observable<BaseResponse<NewsResponse>>
+    fun getTopHeadlines(params: GetTopHeadlinesUseCase.Params): Observable<BaseResponse<NewsResponse>>
 }
