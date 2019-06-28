@@ -3,10 +3,10 @@ package com.opensource.news.view.main
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.opensource.news.view.base.BaseActivity
 import com.opensource.news.R
-import com.opensource.news.util.ViewModelFactory
 import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
+import com.opensource.news.util.ViewModelFactory
+import com.opensource.news.view.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -29,11 +29,8 @@ class MainActivity : BaseActivity<MainViewModel>() {
         rv_news.layoutManager = LinearLayoutManager(this)
         rv_news.adapter = newsAdapter
 
-        viewModel.fetchNews(GetTopHeadlinesUseCase.Params(country = "in"))
         viewModel.newsLiveData.observe(this, Observer { newsAdapter.newsList = it.articles })
-    }
 
-    override fun onAttachObservers() {
-//        viewModel.newsLiveData.observe(this, Observer { newsAdapter.newsList = it.articles })
+        viewModel.fetchNews(GetTopHeadlinesUseCase.Params(country = "in"))
     }
 }

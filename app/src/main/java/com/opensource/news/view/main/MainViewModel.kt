@@ -2,9 +2,9 @@ package com.opensource.news.view.main
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
-import com.opensource.news.view.base.BaseViewModel
 import com.opensource.news.domain.model.NewsResponse
 import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
+import com.opensource.news.view.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -13,10 +13,7 @@ import javax.inject.Inject
  * @author Dhruvaraj Nagarajan
  */
 @SuppressLint("CheckResult")
-class MainViewModel @Inject constructor() : BaseViewModel() {
-
-    @Inject
-    lateinit var getTopHeadlines: GetTopHeadlinesUseCase
+class MainViewModel @Inject constructor(private val getTopHeadlines: GetTopHeadlinesUseCase) : BaseViewModel() {
 
     val newsLiveData by lazy { MutableLiveData<NewsResponse>() }
 

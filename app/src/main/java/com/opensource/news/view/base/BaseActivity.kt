@@ -27,7 +27,6 @@ abstract class BaseActivity<T : BaseViewModel> : DaggerXActivity() {
         // since LiveData is LifeCycle aware, we can observe it once here
         // otherwise we would've done it only during visibility
         observeViewState()
-        onAttachObservers()
     }
 
     abstract fun getLayout(): Int
@@ -55,8 +54,6 @@ abstract class BaseActivity<T : BaseViewModel> : DaggerXActivity() {
             }
         })
     }
-
-    abstract fun onAttachObservers()
 
     open fun showLoading(message: String? = null) {
         viewStateDialog.showLoading(message)

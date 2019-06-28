@@ -2,6 +2,9 @@ package com.opensource.news.domain.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * @author Dhruvaraj Nagarajan
+ */
 data class NewsResponse(
     @SerializedName("status")
     var status: String? = null,
@@ -13,7 +16,7 @@ data class NewsResponse(
 
 data class Source(
     @SerializedName("id")
-    var id: Any? = null,
+    var id: String? = null,
     @SerializedName("name")
     var name: String? = null
 )
