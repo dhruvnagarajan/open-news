@@ -1,11 +1,15 @@
 package com.opensource.news.view.main
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.opensource.news.R
 import com.opensource.news.domain.model.Article
 import com.opensource.news.util.toDateAndTime
@@ -16,6 +20,8 @@ import kotlinx.android.synthetic.main.row_news.view.*
  */
 class NewsAdapter(
     private val context: Context,
+    private val lifecycleOwner: LifecycleOwner,
+    private val onLoadImg: (url: String) -> MutableLiveData<Bitmap>,
     private val onClick: (article: Article) -> Unit
 ) : RecyclerView.Adapter<NewsAdapter.VH>() {
 
@@ -39,11 +45,20 @@ class NewsAdapter(
         fun bind(data: Article) {
             itemView.container.setOnClickListener { onClick(data) }
 
-            Glide.with(context)
-                .load(data.urlToImage)
-                .placeholder(R.drawable.ic_twotone_blur_on_24px)
-                .centerCrop()
-                .into(itemView.iv_feature_image)
+            itemView.iv_feature_image.setImageDrawable(
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    context.resources.getDrawable(R.drawable.ic_twotone_blur_on_24px, null)
+                else context.resources.getDrawable(R.drawable.ic_twotone_blur_on_24px)
+            )
+
+            if (data.urlToImage?.isNotEmpty() != false) {
+                val bitmapLiveData: MutableLiveData<Bitmap>
+                if (itemView.iv_feature_image.tag == null) {
+                    bitmapLiveData = onLoadImg(data.urlToImage!!)
+                    itemView.iv_feature_image.tag = bitmapLiveData
+                } else bitmapLiveData = itemView.iv_feature_image.tag as MutableLiveData<Bitmap>
+                bitmapLiveData.observe(lifecycleOwner, Observer { itemView.iv_feature_image.setImageBitmap(it) })
+            }
 
             itemView.tv_headline.text = data.title
 
