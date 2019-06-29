@@ -1,10 +1,10 @@
 package data.repository
 
-import com.opensource.news.domain.model.BaseResponse
-import com.opensource.news.domain.model.NewsResponse
+import com.opensource.news.util.NetworkUtils
 import data.network.NetworkSource
 import data.persistence.LocalSource
 import io.reactivex.Observable
+import javax.inject.Inject
 
 /**
  * @author Dhruvaraj Nagarajan
@@ -14,18 +14,20 @@ abstract class OfflineFirstRepository<K, V>(
     private val networkSource: NetworkSource<K, V>
 ) {
 
+    @Inject
+    lateinit var networkUtils: NetworkUtils
+
+    /**
+     * Return from local source immediately in all cases.
+     * If internet is available, then update local source with new data, in background.
+     */
     fun getFromAnySource(key: K): Observable<V> {
-        return localSource.get(key).flatMap { localValue ->
-            val localResponse = localValue as BaseResponse<NewsResponse>
-            return@flatMap if (localResponse.data != null) {
-                Observable.create {
-                    it.onNext(localValue)
-                    it.onComplete()
+        return if (networkUtils.isNetworkAvailable()) {
+            return localSource.get(key).mergeWith(networkSource.get(key))
+                .scan { localResponse, networkResponse ->
+                    localSource.put(key, networkResponse)
+                    return@scan networkResponse
                 }
-            } else networkSource.get(key).map { apiResponse ->
-                localSource.put(key, apiResponse)
-                return@map apiResponse
-            }
-        }
+        } else localSource.get(key)
     }
 }

@@ -11,6 +11,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
+ * This repo is responsible for always returning the latest headlines.
+ *
+ * Logic for choosing between [NewsLocalSourceImpl] and [NewsNetworkSourceImpl]
+ * is managed by [OfflineFirstRepository].
+ *
  * @author Dhruvaraj Nagarajan
  */
 @Singleton
@@ -20,6 +25,6 @@ class NewsRepositoryImpl @Inject constructor(
     newsLocalSourceImpl, newsNetworkSourceImpl
 ), NewsRepository {
 
-    override fun getTopHeadlines(params: GetTopHeadlinesUseCase.Params):
-            Observable<BaseResponse<NewsResponse>> = getFromAnySource(params)
+    override fun getTopHeadlines(params: GetTopHeadlinesUseCase.Params): Observable<BaseResponse<NewsResponse>> =
+        getFromAnySource(params)
 }

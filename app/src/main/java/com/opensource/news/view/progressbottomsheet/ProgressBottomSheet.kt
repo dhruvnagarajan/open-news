@@ -31,6 +31,8 @@ class ProgressBottomSheet : BaseBottomSheetDialogFragment() {
         progressbar = view.progressbar
         tv_message = view.tv_message
 
+        isCancelable = false
+
         iv_close.setOnClickListener { this@ProgressBottomSheet.dismiss() }
 
         if (viewStateType == ViewType.LOADING) showLoading()

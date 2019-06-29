@@ -30,12 +30,18 @@ class NewsLocalSourceImpl @Inject constructor() :
         fun get(): Observable<BaseResponse<NewsResponse>> =
             Observable.create {
                 val queryResult = Realm.getDefaultInstance().where(NewsRO::class.java).findFirst()
-                it.onNext(BaseResponse(BaseResponse.Status.SUCCESS, queryResult?.fromStorage()))
-                it.onComplete()
+                if (queryResult != null && queryResult.totalResults ?: 0 > 0) {
+                    it.onNext(BaseResponse(BaseResponse.Status.SUCCESS, queryResult.fromStorage()))
+                    it.onComplete()
+                } else {
+                    it.onNext(BaseResponse(BaseResponse.Status.ERROR, "Wow, such empty!"))
+                    it.onComplete()
+                }
             }
 
         fun save(baseResponse: BaseResponse<NewsResponse>) {
             baseResponse.data?.let { news ->
+                evict()
                 Realm.getDefaultInstance().executeTransaction { it.insertOrUpdate(news.toStorage()) }
             }
         }
