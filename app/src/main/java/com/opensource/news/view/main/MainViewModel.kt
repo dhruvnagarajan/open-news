@@ -1,11 +1,14 @@
 package com.opensource.news.view.main
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import com.opensource.news.domain.model.BaseResponse
 import com.opensource.news.domain.model.NewsResponse
 import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
 import com.opensource.news.view.base.BaseViewModel
+import data.repository.ImageRepository
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -14,7 +17,10 @@ import javax.inject.Inject
  * @author Dhruvaraj Nagarajan
  */
 @SuppressLint("CheckResult")
-class MainViewModel @Inject constructor(private val getTopHeadlines: GetTopHeadlinesUseCase) : BaseViewModel() {
+class MainViewModel @Inject constructor(
+    private val getTopHeadlines: GetTopHeadlinesUseCase,
+    private val imageRepository: ImageRepository
+) : BaseViewModel() {
 
     val newsLiveData by lazy { MutableLiveData<NewsResponse>() }
 
@@ -27,11 +33,11 @@ class MainViewModel @Inject constructor(private val getTopHeadlines: GetTopHeadl
                 if (it.status == BaseResponse.Status.SUCCESS) {
                     newsLiveData.postValue(it.data)
                     postSuccessViewState()
-                } else
-                // Observer.onError() is not used for this response in repo because
-                // it is using Observable.merge()
-                // as a result, we have to consume empty data in Observer.onNext() response
-                    postErrorViewState(it.message)
+                } else postErrorViewState(it.message)
             }, { postErrorViewState(it.message) })
+    }
+
+    fun getImg(url: String): Observable<BaseResponse<Bitmap>> {
+        return imageRepository.getImage(url)
     }
 }
