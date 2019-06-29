@@ -1,17 +1,23 @@
 package com.opensource.news.view.main
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.opensource.news.R
 import com.opensource.news.domain.model.Article
+import com.opensource.news.util.toDateAndTime
 import kotlinx.android.synthetic.main.row_news.view.*
 
 /**
  * @author Dhruvaraj Nagarajan
  */
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.VH>() {
+class NewsAdapter(
+    private val context: Context,
+    private val onClick: (article: Article) -> Unit
+) : RecyclerView.Adapter<NewsAdapter.VH>() {
 
     var newsList: List<Article>? = null
         set(value) {
@@ -31,7 +37,23 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.VH>() {
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(data: Article) {
+            itemView.container.setOnClickListener { onClick(data) }
+
+            Glide.with(context)
+                .load(data.urlToImage)
+                .placeholder(R.drawable.ic_twotone_blur_on_24px)
+                .centerCrop()
+                .into(itemView.iv_feature_image)
+
             itemView.tv_headline.text = data.title
+
+            itemView.tv_gist.text = data.content
+
+            itemView.tv_meta.text = getMetaInfo(data)
+        }
+
+        private fun getMetaInfo(data: Article): String {
+            return data.publishedAt?.toDateAndTime() + "\n" + data.source?.name
         }
     }
 }

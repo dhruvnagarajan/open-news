@@ -3,7 +3,7 @@ package com.opensource.news.view.base
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.opensource.news.util.showToast
-import com.opensource.news.view.progressbottomsheet.ViewStateDialog
+import com.opensource.news.view.progressbottomsheet.ViewStatePrompt
 import javax.inject.Inject
 
 
@@ -13,7 +13,7 @@ import javax.inject.Inject
 abstract class BaseActivity<T : BaseViewModel> : DaggerXActivity() {
 
     @Inject
-    lateinit var viewStateDialog: ViewStateDialog
+    lateinit var viewStatePrompt: ViewStatePrompt
 
     lateinit var viewModel: T
 
@@ -21,7 +21,7 @@ abstract class BaseActivity<T : BaseViewModel> : DaggerXActivity() {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
         viewModel = provideViewModel()
-        onCreateView()
+        onCreateView(savedInstanceState)
 
         // all observers have to use LiveData
         // since LiveData is LifeCycle aware, we can observe it once here
@@ -33,7 +33,7 @@ abstract class BaseActivity<T : BaseViewModel> : DaggerXActivity() {
 
     abstract fun provideViewModel(): T
 
-    abstract fun onCreateView()
+    abstract fun onCreateView(bundle: Bundle?)
 
     private fun observeViewState() {
         viewModel.viewStateLiveData.observe(this, Observer {
@@ -56,18 +56,18 @@ abstract class BaseActivity<T : BaseViewModel> : DaggerXActivity() {
     }
 
     open fun showLoading(message: String? = null) {
-        viewStateDialog.showLoading(message)
+        viewStatePrompt.showLoading(message)
     }
 
     open fun hideLoading() {
-        viewStateDialog.dismiss()
+        viewStatePrompt.dismiss()
     }
 
     open fun showError(message: String?) {
-        viewStateDialog.showError(message)
+        viewStatePrompt.showError(message)
     }
 
     open fun hideError() {
-        viewStateDialog.dismiss()
+        viewStatePrompt.dismiss()
     }
 }

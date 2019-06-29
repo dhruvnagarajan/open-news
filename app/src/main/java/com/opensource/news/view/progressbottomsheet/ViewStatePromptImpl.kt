@@ -6,7 +6,7 @@ import javax.inject.Inject
 /**
  * @author Dhruvaraj Nagarajan
  */
-class ViewStateDialogImpl @Inject constructor() : ViewStateDialog {
+class ViewStatePromptImpl @Inject constructor() : ViewStatePrompt {
 
     @Inject
     lateinit var activity: AppCompatActivity
