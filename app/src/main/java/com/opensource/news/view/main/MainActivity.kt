@@ -1,6 +1,7 @@
 package com.opensource.news.view.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +31,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     override fun onCreateView(bundle: Bundle?) {
         newsAdapter = NewsAdapter(this) { clickedArticle ->
+            // when an article is clicked, open its details in a WebView
             launchActivity<WebViewActivity> {
                 putExtra(WebViewActivity.TITLE, clickedArticle.title)
                 putExtra(WebViewActivity.URL, clickedArticle.url)
@@ -40,6 +42,17 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
         viewModel.newsLiveData.observe(this, Observer { newsAdapter.newsList = it.articles })
 
-        viewModel.fetchNews(GetTopHeadlinesUseCase.Params(q = "bitcoin"))
+        viewModel.fetchNews(GetTopHeadlinesUseCase.Params(q = "us"))
+    }
+
+    override fun showError(message: String?) {
+        rv_news.visibility = View.GONE
+        tv_error.visibility = View.VISIBLE
+        tv_error.text = message
+    }
+
+    override fun hideError() {
+        rv_news.visibility = View.VISIBLE
+        tv_error.visibility = View.GONE
     }
 }

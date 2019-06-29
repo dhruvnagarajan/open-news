@@ -6,6 +6,8 @@ import com.opensource.news.domain.repository.NewsRepository
 import io.reactivex.Observable
 
 /**
+ * Returns top headlines for given query.
+ *
  * @author Dhruvaraj Nagarajan
  */
 class GetTopHeadlinesUseCase(private val newsRepository: NewsRepository) :
