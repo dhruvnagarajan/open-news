@@ -1,7 +1,6 @@
 package data.persistence.bitmap
 
 import android.graphics.Bitmap
-import android.util.Log
 import com.opensource.news.domain.model.BaseResponse
 import data.persistence.LocalSource
 import io.reactivex.Observable
@@ -12,59 +11,52 @@ import javax.inject.Inject
  */
 class BitmapLocalSourceImpl @Inject constructor() : LocalSource<String, BaseResponse<Bitmap>> {
 
-    private val bitMapHash by lazy { HashMap<String, Bitmap>() }
+    private val memCache by lazy { BitmapMemoryCache() }
+    private val diskCache by lazy { BitmapDiskCache() }
 
+    /**
+     * get from memory if available.
+     * get from disk otherwise.
+     */
     override fun get(key: String): Observable<BaseResponse<Bitmap>> {
-        val memoryResponse = getFromMemory(key)
-        return if (memoryResponse != null) {
-            Observable.create {
-                it.onNext(
+        return Observable.create { emitter ->
+            val memoryResponse = memCache.get(key)
+            if (memoryResponse != null) {
+                // return value from memory
+                emitter.onNext(
                     BaseResponse(
                         BaseResponse.Status.SUCCESS,
                         memoryResponse
                     )
                 )
-                it.onComplete()
-            }
-        } else {
-            val diskResponse = getImageFromDisk(key)
-            return Observable.create {
+            } else {
+                // value not found in memory
+                // query disk
+                val diskResponse = diskCache.get(key)
                 if (diskResponse != null) {
-                    it.onNext(
+                    // return value found on disk
+                    emitter.onNext(
                         BaseResponse(
                             BaseResponse.Status.SUCCESS,
                             diskResponse
                         )
                     )
                 } else {
-                    it.onNext(
+                    // final case, value not found either in memory or on disk
+                    emitter.onNext(
                         BaseResponse(
                             BaseResponse.Status.ERROR,
                             "Resource not found offline."
                         )
                     )
                 }
-
-                it.onComplete()
             }
+            emitter.onComplete()
         }
     }
 
     override fun put(key: String, value: BaseResponse<Bitmap>) {
-        Log.e("Cached", key)
+        memCache.put(key, value.data)
+        diskCache.put(key, value.data)
     }
-
-    private fun getFromMemory(key: String): Bitmap? {
-        return bitMapHash[key]
-    }
-
-    private fun cacheInMemory(key: String, value: Bitmap) {
-        bitMapHash[key] = value
-    }
-
-    private fun getImageFromDisk(url: String): Bitmap? {
-        return null
-    }
-
-    private fun cacheInDisk(key: String, value: Bitmap) {}
 }
