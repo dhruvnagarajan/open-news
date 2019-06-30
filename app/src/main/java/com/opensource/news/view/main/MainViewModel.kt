@@ -8,6 +8,7 @@ import com.opensource.news.domain.model.NewsResponse
 import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
 import com.opensource.news.view.base.BaseViewModel
 import data.repository.ImageRepository
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -22,7 +23,7 @@ class MainViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val newsLiveData by lazy { MutableLiveData<NewsResponse>() }
-    val bitmapLiveDataHash by lazy { HashMap<String, MutableLiveData<Bitmap>>() }
+    private val bitmapHash by lazy { HashMap<String, Bitmap>() }
 
     fun fetchNews(params: GetTopHeadlinesUseCase.Params) {
         postLoadingViewState("Fetching Top Highlights...")
@@ -37,14 +38,20 @@ class MainViewModel @Inject constructor(
             }, { postErrorViewState(it.message) })
     }
 
-    fun getImg(url: String): MutableLiveData<Bitmap> {
-        if (bitmapLiveDataHash[url] == null) {
-            val bitmapLiveData = MutableLiveData<Bitmap>()
+    fun getImg(url: String): Observable<Bitmap> {
+        return if (bitmapHash[url] == null) {
             imageRepository.getImage(url)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe { bitmapLiveData.postValue(it) }
-            return bitmapLiveData
-        } else return bitmapLiveDataHash[url]!!
+                .map {
+                    bitmapHash[url] = it
+                    return@map it
+                }
+        } else Observable.create {
+            if (it.isDisposed) {
+                it.onComplete()
+                return@create
+            }
+            it.onNext(bitmapHash[url]!!)
+            it.onComplete()
+        }
     }
 }

@@ -3,7 +3,6 @@ package com.opensource.news.view.main
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +13,7 @@ import com.opensource.news.util.ViewModelFactory
 import com.opensource.news.util.launchActivity
 import com.opensource.news.view.base.BaseActivity
 import com.opensource.news.view.web.WebViewActivity
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -34,7 +34,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
     override fun onCreateView(bundle: Bundle?) {
         newsAdapter = NewsAdapter(
-            this, this,
+            this,
             { url -> getImg(url) },
             { clickedArticle -> onArticleClick(clickedArticle) })
         rv_news.layoutManager = LinearLayoutManager(this)
@@ -53,7 +53,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
         }
     }
 
-    private fun getImg(url: String): MutableLiveData<Bitmap> {
+    private fun getImg(url: String): Observable<Bitmap> {
         return viewModel.getImg(url)
     }
 

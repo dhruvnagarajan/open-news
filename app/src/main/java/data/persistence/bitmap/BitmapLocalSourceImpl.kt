@@ -1,19 +1,68 @@
 package data.persistence.bitmap
 
 import android.graphics.Bitmap
+import com.opensource.news.domain.model.BaseResponse
 import data.persistence.LocalSource
 import io.reactivex.Observable
 
 /**
  * @author Dhruvaraj Nagarajan
  */
-class BitmapLocalSourceImpl : LocalSource<String, Bitmap> {
+class BitmapLocalSourceImpl : LocalSource<String, BaseResponse<Bitmap>> {
 
-    override fun get(key: String): Observable<Bitmap> {
+    private val bitMapHash by lazy { HashMap<String, Bitmap>() }
+
+    override fun get(key: String): Observable<BaseResponse<Bitmap>> {
+        val memoryResponse = getFromMemory(key)
+        return if (memoryResponse != null) {
+            Observable.create {
+                it.onNext(
+                    BaseResponse(
+                        BaseResponse.Status.SUCCESS,
+                        memoryResponse
+                    )
+                )
+                it.onComplete()
+            }
+        } else {
+            val diskResponse = getImageFromDisk(key)
+            return Observable.create {
+                if (diskResponse != null) {
+                    it.onNext(
+                        BaseResponse(
+                            BaseResponse.Status.SUCCESS,
+                            diskResponse
+                        )
+                    )
+                } else {
+                    it.onNext(
+                        BaseResponse(
+                            BaseResponse.Status.ERROR,
+                            "Resource not found offline."
+                        )
+                    )
+                }
+
+                it.onComplete()
+            }
+        }
+    }
+
+    override fun put(key: String, value: BaseResponse<Bitmap>) {
         TODO("not implemented")
     }
 
-    override fun put(key: String, value: Bitmap) {
-        TODO("not implemented")
+    private fun getFromMemory(key: String): Bitmap? {
+        return bitMapHash[key]
     }
+
+    private fun cacheInMemory(key: String, value: Bitmap) {
+        bitMapHash[key] = value
+    }
+
+    private fun getImageFromDisk(url: String): Bitmap? {
+        return null
+    }
+
+    private fun cacheInDisk(key: String, value: Bitmap) {}
 }

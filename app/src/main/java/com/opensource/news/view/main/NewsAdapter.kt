@@ -6,13 +6,14 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.opensource.news.R
 import com.opensource.news.domain.model.Article
 import com.opensource.news.util.toDateAndTime
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_news.view.*
 
 /**
@@ -20,8 +21,7 @@ import kotlinx.android.synthetic.main.row_news.view.*
  */
 class NewsAdapter(
     private val context: Context,
-    private val lifecycleOwner: LifecycleOwner,
-    private val onLoadImg: (url: String) -> MutableLiveData<Bitmap>,
+    private val onLoadImg: (url: String) -> Observable<Bitmap>,
     private val onClick: (article: Article) -> Unit
 ) : RecyclerView.Adapter<NewsAdapter.VH>() {
 
@@ -37,38 +37,54 @@ class NewsAdapter(
     override fun getItemCount(): Int = newsList?.size ?: 0
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        newsList?.get(position)?.let { holder.bind(it) }
+        newsList?.get(position)?.let { article ->
+
+            // if VH was recycled, clear old bitmap request
+            if (holder.itemView.tag != null) {
+                val rxImage = holder.itemView.tag as RxImage
+                if (!rxImage.disposable.isDisposed)
+                    rxImage.disposable.dispose()
+            }
+
+            // new bitmap request
+            val obs = onLoadImg(article.urlToImage ?: "")
+            var disposable: Disposable? = null
+            obs.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    // bind bitmap response
+                    holder.bindImage(it)
+                }, {}, {}, { disposable = it })
+            holder.itemView.tag = RxImage(obs, disposable!!)
+
+            // bind data as usual
+            holder.bind(article)
+        }
     }
+
 
     inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(data: Article) {
             itemView.container.setOnClickListener { onClick(data) }
-
             itemView.iv_feature_image.setImageDrawable(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                     context.resources.getDrawable(R.drawable.ic_twotone_blur_on_24px, null)
                 else context.resources.getDrawable(R.drawable.ic_twotone_blur_on_24px)
             )
-
-            if (data.urlToImage?.isNotEmpty() != false) {
-                val bitmapLiveData: MutableLiveData<Bitmap>
-                if (itemView.iv_feature_image.tag == null) {
-                    bitmapLiveData = onLoadImg(data.urlToImage!!)
-                    itemView.iv_feature_image.tag = bitmapLiveData
-                } else bitmapLiveData = itemView.iv_feature_image.tag as MutableLiveData<Bitmap>
-                bitmapLiveData.observe(lifecycleOwner, Observer { itemView.iv_feature_image.setImageBitmap(it) })
-            }
-
             itemView.tv_headline.text = data.title
-
             itemView.tv_gist.text = data.content
-
-            itemView.tv_meta.text = getMetaInfo(data)
+            itemView.tv_meta.text = data.publishedAt?.toDateAndTime() +
+                    "\n" + data.source?.name
         }
 
-        private fun getMetaInfo(data: Article): String {
-            return data.publishedAt?.toDateAndTime() + "\n" + data.source?.name
+        fun bindImage(bitmap: Bitmap) {
+            itemView.iv_feature_image.setImageBitmap(bitmap)
         }
     }
+
+    data class RxImage(
+        val observable: Observable<Bitmap>,
+        val disposable: Disposable
+    )
 }
