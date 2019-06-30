@@ -3,7 +3,7 @@ package data.network.news
 import com.opensource.news.domain.model.BaseResponse
 import com.opensource.news.domain.model.NewsResponse
 import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
-import data.TempConstants
+import data.AppConstants
 import data.network.ApiService
 import data.network.NetworkSource
 import io.reactivex.Observable
@@ -23,7 +23,7 @@ class NewsNetworkSourceImpl @Inject constructor(private val apiService: ApiServi
             request.language,
             request.country,
             request.category,
-            TempConstants.API_KEY
+            AppConstants.API_KEY
         ).flatMap(Function { response ->
             return@Function if (response.isSuccessful && response.body() != null) {
                 Observable.create {

@@ -2,7 +2,7 @@ package com.opensource.news.di
 
 import com.opensource.news.NewsApp
 import com.opensource.news.di.module.AppModule
-import com.opensource.news.di.module.ContributeActivityModule
+import com.opensource.news.di.module.activity.ContributeActivityModule
 import com.opensource.news.di.module.NetworkModule
 import com.opensource.news.di.module.NewsUseCaseModule
 import dagger.Component

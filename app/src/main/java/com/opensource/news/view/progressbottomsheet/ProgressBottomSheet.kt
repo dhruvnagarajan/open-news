@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.opensource.news.R
 import com.opensource.news.view.base.BaseBottomSheetDialogFragment
+import com.opensource.news.view.base.BaseViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_progress.view.*
 
 /**
@@ -15,7 +18,8 @@ import kotlinx.android.synthetic.main.bottom_sheet_progress.view.*
  */
 class ProgressBottomSheet : BaseBottomSheetDialogFragment() {
 
-    var viewStateType = ViewType.NONE
+    lateinit var viewModel: BaseViewModel
+
     var message: String? = null
 
     private lateinit var iv_close: ImageView
@@ -27,16 +31,24 @@ class ProgressBottomSheet : BaseBottomSheetDialogFragment() {
     }
 
     override fun onCreateView(view: View) {
+        viewModel = ViewModelProviders.of(activity!!)[BaseViewModel::class.java]
+
         iv_close = view.iv_close
         progressbar = view.progressbar
         tv_message = view.tv_message
 
         isCancelable = false
 
-        iv_close.setOnClickListener { this@ProgressBottomSheet.dismiss() }
+        viewModel.viewStateLiveData.observe(this, Observer {
+            message = it.message
+            when {
+                it.viewStateType == BaseViewModel.ViewStateType.LOADING -> showLoading()
+                it.viewStateType == BaseViewModel.ViewStateType.ERROR -> showError()
+                it.viewStateType == BaseViewModel.ViewStateType.NONE -> dismiss()
+            }
+        })
 
-        if (viewStateType == ViewType.LOADING) showLoading()
-        else if (viewStateType == ViewType.ERROR) showError()
+        iv_close.setOnClickListener { this@ProgressBottomSheet.dismiss() }
     }
 
     private fun showLoading() {
