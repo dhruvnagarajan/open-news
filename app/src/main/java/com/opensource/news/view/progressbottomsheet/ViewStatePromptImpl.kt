@@ -15,15 +15,13 @@ class ViewStatePromptImpl @Inject constructor() : ViewStatePrompt {
     private val progressBottomSheet = ProgressBottomSheet()
 
     override fun showLoading(message: String?) {
-        progressBottomSheet.viewStateType = ProgressBottomSheet.ViewType.LOADING
-        progressBottomSheet.message = message
-        progressBottomSheet.show(activity.supportFragmentManager, tag)
+        if (activity.supportFragmentManager.findFragmentByTag(tag) == null)
+            progressBottomSheet.show(activity.supportFragmentManager, tag)
     }
 
     override fun showError(message: String?) {
-        progressBottomSheet.viewStateType = ProgressBottomSheet.ViewType.ERROR
-        progressBottomSheet.message = message
-        progressBottomSheet.show(activity.supportFragmentManager, tag)
+        if (activity.supportFragmentManager.findFragmentByTag(tag) == null)
+            progressBottomSheet.show(activity.supportFragmentManager, tag)
     }
 
     override fun dismiss() {
