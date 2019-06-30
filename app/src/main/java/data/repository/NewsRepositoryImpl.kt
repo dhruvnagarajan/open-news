@@ -26,5 +26,5 @@ class NewsRepositoryImpl @Inject constructor(
 ), NewsRepository {
 
     override fun getTopHeadlines(params: GetTopHeadlinesUseCase.Params): Observable<BaseResponse<NewsResponse>> =
-        getFromAnySource(params)
+        getFromAnySource(params, true)
 }

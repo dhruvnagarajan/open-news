@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.opensource.news.R
 import com.opensource.news.domain.model.Article
+import com.opensource.news.domain.model.BaseResponse
 import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
 import com.opensource.news.util.ViewModelFactory
 import com.opensource.news.util.launchActivity
@@ -53,7 +54,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
         }
     }
 
-    private fun getImg(url: String): Observable<Bitmap> {
+    private fun getImg(url: String): Observable<BaseResponse<Bitmap>> {
         return viewModel.getImg(url)
     }
 

@@ -23,7 +23,6 @@ class MainViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val newsLiveData by lazy { MutableLiveData<NewsResponse>() }
-    private val bitmapHash by lazy { HashMap<String, Bitmap>() }
 
     fun fetchNews(params: GetTopHeadlinesUseCase.Params) {
         postLoadingViewState("Fetching Top Highlights...")
@@ -38,20 +37,7 @@ class MainViewModel @Inject constructor(
             }, { postErrorViewState(it.message) })
     }
 
-    fun getImg(url: String): Observable<Bitmap> {
-        return if (bitmapHash[url] == null) {
-            imageRepository.getImage(url)
-                .map {
-                    bitmapHash[url] = it
-                    return@map it
-                }
-        } else Observable.create {
-            if (it.isDisposed) {
-                it.onComplete()
-                return@create
-            }
-            it.onNext(bitmapHash[url]!!)
-            it.onComplete()
-        }
+    fun getImg(url: String): Observable<BaseResponse<Bitmap>> {
+        return imageRepository.getImage(url)
     }
 }

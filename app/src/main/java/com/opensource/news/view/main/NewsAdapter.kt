@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.opensource.news.R
 import com.opensource.news.domain.model.Article
+import com.opensource.news.domain.model.BaseResponse
 import com.opensource.news.util.toDateAndTime
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.row_news.view.*
  */
 class NewsAdapter(
     private val context: Context,
-    private val onLoadImg: (url: String) -> Observable<Bitmap>,
+    private val onLoadImg: (url: String) -> Observable<BaseResponse<Bitmap>>,
     private val onClick: (article: Article) -> Unit
 ) : RecyclerView.Adapter<NewsAdapter.VH>() {
 
@@ -53,7 +54,7 @@ class NewsAdapter(
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     // bind bitmap response
-                    holder.bindImage(it)
+                    it.data?.let { bitmap -> holder.bindImage(bitmap) }
                 }, {}, {}, { disposable = it })
             holder.itemView.tag = RxImage(obs, disposable!!)
 
@@ -84,7 +85,7 @@ class NewsAdapter(
     }
 
     data class RxImage(
-        val observable: Observable<Bitmap>,
+        val observable: Observable<BaseResponse<Bitmap>>,
         val disposable: Disposable
     )
 }
