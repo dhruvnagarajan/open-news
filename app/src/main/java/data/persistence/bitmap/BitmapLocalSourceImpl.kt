@@ -10,10 +10,9 @@ import javax.inject.Inject
  * @author Dhruvaraj Nagarajan
  */
 class BitmapLocalSourceImpl @Inject constructor(
-    private val diskCache: BitmapDiskCache
+    private val diskCache: BitmapDiskCache,
+    private val memCache: BitmapMemoryCache
 ) : LocalSource<String, BaseResponse<Bitmap>> {
-
-    private val memCache by lazy { BitmapMemoryCache() }
 
     /**
      * get from memory if available.

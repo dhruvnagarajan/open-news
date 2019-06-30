@@ -4,8 +4,9 @@ import android.graphics.Bitmap
 import androidx.collection.LruCache
 import data.persistence.Cache
 import timber.log.Timber
+import javax.inject.Inject
 
-class BitmapMemoryCache : Cache<String, Bitmap?> {
+class BitmapMemoryCache @Inject constructor(): Cache<String, Bitmap?> {
 
     private val memHash by lazy {
         object : LruCache<String, Bitmap>((Runtime.getRuntime().maxMemory() / 1024 / 8).toInt()) {

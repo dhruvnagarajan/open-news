@@ -49,9 +49,9 @@ class NewsAdapter(
             }
 
             // new bitmap request
-            val obs = onLoadImg(article.urlToImage ?: "")
+            val bitmapObservable = onLoadImg(article.urlToImage ?: "")
             var disposable: Disposable? = null
-            obs.observeOn(AndroidSchedulers.mainThread())
+            bitmapObservable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     // bind bitmap response
@@ -59,7 +59,8 @@ class NewsAdapter(
                 }, {
                     Timber.e(it)
                 }, {}, { disposable = it })
-            holder.itemView.tag = RxImage(obs, disposable!!)
+
+            holder.itemView.tag = RxImage(bitmapObservable, disposable!!)
 
             // bind data as usual
             holder.bind(article)

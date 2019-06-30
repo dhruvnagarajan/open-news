@@ -23,9 +23,6 @@ abstract class BaseActivity<T : BaseViewModel> : DaggerXActivity() {
         viewModel = provideViewModel()
         onCreateView(savedInstanceState)
 
-        // all observers have to use LiveData
-        // since LiveData is LifeCycle aware, we can observe it once here
-        // otherwise we would've done it only during visibility
         observeViewState()
     }
 
