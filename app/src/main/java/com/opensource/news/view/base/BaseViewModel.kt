@@ -2,11 +2,12 @@ package com.opensource.news.view.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import javax.inject.Inject
 
 /**
  * @author Dhruvaraj Nagarajan
  */
-open class BaseViewModel : ViewModel() {
+open class BaseViewModel @Inject constructor() : ViewModel() {
 
     val viewStateLiveData = MutableLiveData<ViewState>()
 

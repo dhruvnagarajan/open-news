@@ -1,4 +1,4 @@
-package com.opensource.news.di.module
+package com.opensource.news.di.module.activity
 
 import com.opensource.news.view.main.MainActivity
 import com.opensource.news.view.web.WebViewActivity
