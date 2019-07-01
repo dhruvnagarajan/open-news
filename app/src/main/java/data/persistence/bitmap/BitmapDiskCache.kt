@@ -113,11 +113,16 @@ class BitmapDiskCache @Inject constructor(private val context: Context) : Cache<
 
     private fun getDiskCacheDir(context: Context): File {
         val cachePath =
-            if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState() || !Environment.isExternalStorageRemovable())
+            if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState() ||
+                !Environment.isExternalStorageRemovable()
+            ) {
                 context.externalCacheDir!!.path
-            else
+            } else {
                 context.cacheDir.path
-        return File(cachePath + File.separator + cacheSubDir)
+            }
+        val completePath = cachePath + File.separator + cacheSubDir
+        Log.d(BitmapDiskCache::class.java.name, "Cache path : $completePath")
+        return File(completePath)
     }
 
     @Throws(IOException::class)
