@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
+import android.util.Log
 import com.jakewharton.disklrucache.DiskLruCache
 import com.opensource.news.BuildConfig
 import data.persistence.Cache
@@ -20,7 +21,7 @@ import kotlin.concurrent.withLock
 @Singleton
 class BitmapDiskCache @Inject constructor(private val context: Context) : Cache<String, Bitmap?> {
 
-    private val cacheSize = (1024 * 1024 * 40).toLong()
+    private val cacheSize = (1024 * 1024 * 20).toLong()
     private val cacheSubDir = "bitmap_cache"
     private var diskLruCache: DiskLruCache? = null
     private val diskCacheLock = ReentrantLock()
@@ -38,62 +39,65 @@ class BitmapDiskCache @Inject constructor(private val context: Context) : Cache<
 
     @Throws(InterruptedException::class, IOException::class, NoSuchAlgorithmException::class)
     override operator fun get(key: String): Bitmap? {
-        var key = key
-        key = getValidKey(key)
-        synchronized(diskCacheLock) {
-            while (diskCacheStarting) {
-                try {
-                    diskCacheLockCondition.await()
-                } catch (e: InterruptedException) {
-                    close()
-                    throw e
-                }
+        var key = getValidKey(key)
+        return getSync(key)
+    }
 
+    private fun getSync(key: String): Bitmap? {
+        return if (diskLruCache != null) {
+            var result: Bitmap? = null
+            try {
+                diskLruCache!!.get(key).use { snapshot ->
+                    if (snapshot != null) {
+                        Log.d(BitmapDiskCache::class.java.name, "Lru found $key")
+                        result = BitmapFactory.decodeStream(snapshot.getInputStream(0))
+                    } else Log.d(BitmapDiskCache::class.java.name, "Lru found null for $key")
+                }
+            } catch (e: Exception) {
+                close()
+                Log.d(BitmapDiskCache::class.java.name, "Lru read fail ${e.message}")
+                throw e
             }
-            return if (diskLruCache != null) {
-                var result: Bitmap? = null
-                try {
-                    diskLruCache!!.get(key).use { snapshot ->
-                        if (snapshot != null)
-                            result = BitmapFactory.decodeStream(snapshot.getInputStream(0))
-                    }
-                } catch (e: Exception) {
-                    close()
-                    throw e
-                }
-
-                result
-            } else null
-        }
+            result
+        } else null
     }
 
     @Throws(IOException::class, NoSuchAlgorithmException::class)
     override fun put(key: String, bitmap: Bitmap?) {
         bitmap ?: return
-        var key = key
-        key = getValidKey(key)
+        var key = getValidKey(key)
+        if (diskCacheLock.isLocked) {
+            diskCacheLockCondition.await()
+            writeSync(key, bitmap)
+        } else writeSync(key, bitmap)
+    }
+
+    private fun writeSync(key: String, bitmap: Bitmap) {
         synchronized(diskCacheLock) {
             var editor: DiskLruCache.Editor? = null
             try {
                 if (diskLruCache != null && diskLruCache!!.get(key) == null) {
                     editor = diskLruCache!!.edit(key)
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, editor!!.newOutputStream(0))
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, editor!!.newOutputStream(0))
                     editor.commit()
+                    Log.d(BitmapDiskCache::class.java.name, "Lru write success for $key")
                 }
             } catch (e: IOException) {
+                Log.d(BitmapDiskCache::class.java.name, "Lru write fail ${e.message}")
                 if (editor != null) {
                     try {
                         editor.abort()
                     } catch (e2: IOException) {
+                        Log.d(BitmapDiskCache::class.java.name, "Lru write fail ${e.message}")
+                        diskCacheLockCondition.signalAll()
                         close()
                         throw e2
                     }
-
                 }
+                diskCacheLockCondition.signalAll()
                 close()
                 throw e
             }
-
         }
     }
 

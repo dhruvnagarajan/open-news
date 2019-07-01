@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.opensource.news.domain.model.BaseResponse
 import data.persistence.LocalSource
 import io.reactivex.Observable
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -59,6 +60,8 @@ class BitmapLocalSourceImpl @Inject constructor(
     override fun put(key: String, value: BaseResponse<Bitmap>) {
         if (value.data == null) return
         memCache.put(key, value.data)
+        Timber.d("Cached $key in memory")
         diskCache.put(key, value.data)
+        Timber.d("Cached $key in disk")
     }
 }

@@ -1,5 +1,6 @@
 package com.opensource.news
 
+import com.facebook.stetho.Stetho
 import com.opensource.news.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -18,5 +19,6 @@ class NewsApp : DaggerApplication() {
         super.onCreate()
 
         Realm.init(this)
+        Stetho.initializeWithDefaults(this)
     }
 }

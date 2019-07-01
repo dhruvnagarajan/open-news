@@ -40,9 +40,14 @@ abstract class OfflineFirstRepository<K, V>(
         } else localSource.get(key).flatMap { localValue ->
             val _localResponse = localValue as BaseResponse<*>
             return@flatMap if (_localResponse.data == null) {
-                networkSource.get(key).map {
-                    localSource.put(key, it)
-                    it
+                if (networkUtils.isNetworkAvailable()) {
+                    networkSource.get(key).map {
+                        localSource.put(key, it)
+                        it
+                    }
+                } else Observable.create {
+                    it.onNext(localValue)
+                    it.onComplete()
                 }
             } else Observable.create {
                 it.onNext(localValue)
