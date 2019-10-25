@@ -6,48 +6,31 @@ import android.view.MenuItem
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.lifecycle.ViewModelProviders
+import com.dhruvnagarajan.androidcore.view.BaseActivity
+import com.dhruvnagarajan.androidcore.view.BaseViewModel
 import com.opensource.news.R
-import com.opensource.news.util.ViewModelFactory
-import com.opensource.news.view.base.BaseActivity
-import com.opensource.news.view.base.BaseViewModel
 import kotlinx.android.synthetic.main.activity_web.*
-import javax.inject.Inject
 
 /**
  * @author Dhruvaraj Nagarajan
  */
-class WebViewActivity : BaseActivity<BaseViewModel>() {
+class WebViewActivity : BaseActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    override fun onCreate(bundle: Bundle?) {
+        super.onCreate(bundle)
+        setContentView(R.layout.activity_web)
 
-    override fun getLayout(): Int = R.layout.activity_web
-
-    override fun provideViewModel(): BaseViewModel =
-        ViewModelProviders.of(this, viewModelFactory)[BaseViewModel::class.java]
-
-    override fun onCreateView(bundle: Bundle?) {
         val title = intent?.extras?.getString(TITLE) ?: resources.getString(R.string.app_name)
         setTitle(title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         webview.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                viewModel.viewStateLiveData.postValue(
-                    BaseViewModel.ViewState(
-                        BaseViewModel.ViewStateType.LOADING,
-                        "Loading website..."
-                    )
-                )
+                showLoading(BaseViewModel.ViewState.Loading("Fetching article..."))
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
-                viewModel.viewStateLiveData.postValue(
-                    BaseViewModel.ViewState(
-                        BaseViewModel.ViewStateType.NONE
-                    )
-                )
+                showSuccess(BaseViewModel.ViewState.Success)
             }
         }
 

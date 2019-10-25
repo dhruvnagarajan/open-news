@@ -3,10 +3,12 @@ package com.opensource.news.di.module.activity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.opensource.news.di.ViewModelKey
+import com.opensource.news.view.NewsFragment
 import com.opensource.news.view.main.MainActivity
 import com.opensource.news.view.main.MainViewModel
 import dagger.Binds
 import dagger.Module
+import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 /**
@@ -22,4 +24,7 @@ abstract class MainModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     abstract fun provideMainViewModel(mainViewModel: MainViewModel): ViewModel
+
+    @ContributesAndroidInjector
+    abstract fun newsFragment(): NewsFragment
 }

@@ -1,24 +1,20 @@
 package com.opensource.news.view.progressbottomsheet
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import com.dhruvnagarajan.androidcore.view.BaseBottomSheetFragment
 import com.opensource.news.R
-import com.opensource.news.view.base.BaseBottomSheetDialogFragment
-import com.opensource.news.view.base.BaseViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_progress.view.*
 
 /**
  * @author Dhruvaraj Nagarajan
  */
-class ProgressBottomSheet : BaseBottomSheetDialogFragment() {
-
-    lateinit var viewModel: BaseViewModel
+class ProgressBottomSheet : BaseBottomSheetFragment() {
 
     var message: String? = null
 
@@ -26,12 +22,16 @@ class ProgressBottomSheet : BaseBottomSheetDialogFragment() {
     private lateinit var progressbar: ProgressBar
     private lateinit var tv_message: TextView
 
-    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.bottom_sheet_progress, container, false)
     }
 
-    override fun onCreateView(view: View) {
-        viewModel = ViewModelProviders.of(activity!!)[BaseViewModel::class.java]
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         iv_close = view.iv_close
         progressbar = view.progressbar
@@ -39,15 +39,7 @@ class ProgressBottomSheet : BaseBottomSheetDialogFragment() {
 
         isCancelable = false
 
-
-        viewModel.viewStateLiveData.observe(this, Observer {
-            message = it.message
-            when {
-                it.viewStateType == BaseViewModel.ViewStateType.LOADING -> showLoading()
-                it.viewStateType == BaseViewModel.ViewStateType.ERROR -> showError()
-                it.viewStateType == BaseViewModel.ViewStateType.NONE -> dismiss()
-            }
-        })
+        // todo : fix this
 
         iv_close.setOnClickListener { this@ProgressBottomSheet.dismiss() }
     }
@@ -62,9 +54,5 @@ class ProgressBottomSheet : BaseBottomSheetDialogFragment() {
         iv_close.visibility = View.VISIBLE
         progressbar.visibility = View.GONE
         tv_message.text = message
-    }
-
-    enum class ViewType {
-        NONE, LOADING, ERROR
     }
 }

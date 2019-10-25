@@ -1,11 +1,12 @@
-package com.opensource.news.util;
+package com.dhruvnagarajan.androidcore.util;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import javax.inject.Inject;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 /**
  * @author Dhruvaraj Nagarajan
@@ -25,6 +26,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(vmHashMap.get(modelClass).getClass())) {
             return (T) vmHashMap.get(modelClass);
         }
-        throw new IllegalArgumentException("Unknown class name");
+        throw new IllegalArgumentException();
     }
 }

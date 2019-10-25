@@ -4,6 +4,5 @@
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#c56</color>
 
-    <color name="black">#000</color>
-    <color name="white">#fff</color>
+    <color name="background">@color/greylight</color>
 </resources>

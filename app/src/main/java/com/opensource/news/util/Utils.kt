@@ -18,7 +18,8 @@ fun String.toDateAndTime(): String {
 class NetworkUtils @Inject constructor(private val context: Context) {
 
     fun isNetworkAvailable(): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
         return networkInfo?.isConnected ?: false
     }

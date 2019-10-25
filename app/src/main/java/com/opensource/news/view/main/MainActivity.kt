@@ -1,58 +1,49 @@
 package com.opensource.news.view.main
 
 import android.os.Bundle
-import android.view.View
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.view.Menu
+import com.dhruvnagarajan.androidcore.view.BaseActivity
+import com.dhruvnagarajan.nav.replaceFragment
 import com.opensource.news.R
-import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
-import com.opensource.news.util.ViewModelFactory
-import com.opensource.news.util.launchActivity
-import com.opensource.news.view.base.BaseActivity
-import com.opensource.news.view.web.WebViewActivity
+import com.opensource.news.view.NewsFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 /**
  * @author Dhruvaraj Nagarajan
  */
-class MainActivity : BaseActivity<MainViewModel>() {
+class MainActivity : BaseActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-    private lateinit var newsAdapter: NewsAdapter
+        nav.menu.add(Menu.NONE, 1, Menu.NONE, "Feed")
+        nav.menu.add(Menu.NONE, 0, Menu.NONE, "Profile")
 
-    override fun getLayout(): Int = R.layout.activity_main
-
-    override fun provideViewModel(): MainViewModel =
-        ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
-
-    override fun onCreateView(bundle: Bundle?) {
-        newsAdapter = NewsAdapter(this) { clickedArticle ->
-            // when an article is clicked, open its details in a WebView
-            launchActivity<WebViewActivity> {
-                putExtra(WebViewActivity.TITLE, clickedArticle.title)
-                putExtra(WebViewActivity.URL, clickedArticle.url)
+        nav.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                1 -> {
+                    openFeed()
+                    true
+                }
+                2 -> {
+                    openProfile()
+                    true
+                }
+                else -> {
+                    false
+                }
             }
         }
-        rv_news.layoutManager = LinearLayoutManager(this)
-        rv_news.adapter = newsAdapter
 
-        viewModel.newsLiveData.observe(this, Observer { newsAdapter.newsList = it.articles })
-
-        viewModel.fetchNews(GetTopHeadlinesUseCase.Params(q = "tesla"))
+        val id: Int = 1
+        nav.selectedItemId = id
     }
 
-    override fun showError(message: String?) {
-        rv_news.visibility = View.GONE
-        tv_error.visibility = View.VISIBLE
-        tv_error.text = message
+    private fun openFeed() {
+        val f = NewsFragment()
+        replaceFragment(R.id.l_container, f)
     }
 
-    override fun hideError() {
-        rv_news.visibility = View.VISIBLE
-        tv_error.visibility = View.GONE
-    }
+    private fun openProfile() {}
 }

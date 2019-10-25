@@ -3,7 +3,7 @@ package com.opensource.news.di.module.activity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.opensource.news.di.ViewModelKey
-import com.opensource.news.view.base.BaseViewModel
+import com.opensource.news.view.main.MainViewModel
 import com.opensource.news.view.web.WebViewActivity
 import dagger.Binds
 import dagger.Module
@@ -20,6 +20,6 @@ abstract class WebModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(BaseViewModel::class)
-    abstract fun provideMainViewModel(baseViewModel: BaseViewModel): ViewModel
+    @ViewModelKey(MainViewModel::class)
+    abstract fun provideMainViewModel(viewModel: MainViewModel): ViewModel
 }
