@@ -1,54 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                   android:layout_marginTop="8dp"
-                                   android:id="@+id/container"
-                                   android:layout_marginBottom="16dp"
-                                   android:layout_marginLeft="8dp"
-                                   android:layout_marginRight="8dp"
-                                   app:cardCornerRadius="3dp"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="3dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                       android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView android:layout_width="match_parent" android:layout_height="440dp"
-                   app:layout_constraintLeft_toLeftOf="parent"
-                   app:layout_constraintTop_toTopOf="parent"
-                   android:id="@+id/iv_feature_image"/>
+        <ImageView
+                android:id="@+id/iv_feature_image"
+                android:layout_width="102dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:hint="Headline"
-                  app:layout_constraintTop_toBottomOf="@id/iv_feature_image"
-                  android:layout_marginTop="4dp"
-                  android:id="@+id/tv_headline"
-                  android:padding="8dp"
-                  android:textColor="@color/black"
-                  android:textSize="16sp"
-                  android:textStyle="bold"
-                  app:layout_constraintLeft_toLeftOf="parent"/>
+        <TextView
+                android:id="@+id/tv_headline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:hint="Headline"
+                android:maxLines="2"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@id/iv_feature_image"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:layout_marginBottom="4dp"
-                  android:hint="Gist"
-                  app:layout_constraintTop_toBottomOf="@id/tv_headline"
-                  android:layout_marginTop="4dp"
-                  android:id="@+id/tv_gist"
-                  android:padding="8dp"
-                  android:textColor="@color/black"
-                  android:textSize="14sp"
-                  app:layout_constraintLeft_toLeftOf="parent"/>
+        <TextView
+                android:id="@+id/tv_gist"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:ellipsize="end"
+                android:hint="Gist"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="@id/tv_headline"
+                app:layout_constraintRight_toRightOf="@id/tv_headline"
+                app:layout_constraintTop_toBottomOf="@id/tv_headline" />
 
-        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:hint="Meta"
-                  app:layout_constraintTop_toBottomOf="@id/tv_gist"
-                  android:gravity="end"
-                  android:layout_marginTop="4dp"
-                  android:id="@+id/tv_meta"
-                  android:padding="8dp"
-                  android:textColor="@color/black"
-                  android:textSize="14sp"
-                  app:layout_constraintLeft_toLeftOf="parent"/>
+        <TextView
+                android:id="@+id/tv_meta"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:hint="Meta"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="@id/tv_headline"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_gist" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

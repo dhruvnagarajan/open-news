@@ -1,6 +1,7 @@
 package com.opensource.news.view.main
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.opensource.news.domain.model.BaseResponse
 import com.opensource.news.domain.model.NewsResponse
@@ -14,9 +15,11 @@ import javax.inject.Inject
  * @author Dhruvaraj Nagarajan
  */
 @SuppressLint("CheckResult")
-class MainViewModel @Inject constructor(private val getTopHeadlines: GetTopHeadlinesUseCase) : BaseViewModel() {
+class MainViewModel @Inject constructor(
+    private val getTopHeadlines: GetTopHeadlinesUseCase
+) : BaseViewModel() {
 
-    val newsLiveData by lazy { MutableLiveData<NewsResponse>() }
+    val newsLiveData = MutableLiveData<NewsResponse>()
 
     fun fetchNews(params: GetTopHeadlinesUseCase.Params) {
         postLoadingViewState("Fetching Top Highlights...")

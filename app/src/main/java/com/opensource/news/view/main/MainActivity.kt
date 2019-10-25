@@ -42,7 +42,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
 
         viewModel.newsLiveData.observe(this, Observer { newsAdapter.newsList = it.articles })
 
-        viewModel.fetchNews(GetTopHeadlinesUseCase.Params(q = "us"))
+        viewModel.fetchNews(GetTopHeadlinesUseCase.Params(q = "tesla"))
     }
 
     override fun showError(message: String?) {
