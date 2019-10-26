@@ -7,6 +7,7 @@ import com.dhruvnagarajan.nav.replaceFragment
 import com.opensource.news.R
 import com.opensource.news.domain.entity.NewsRequest
 import com.opensource.news.view.NewsFragment
+import com.opensource.news.view.ProfileFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -27,7 +28,7 @@ class MainActivity : BaseActivity() {
                     openFeed()
                     true
                 }
-                2 -> {
+                0 -> {
                     openProfile()
                     true
                 }
@@ -47,5 +48,8 @@ class MainActivity : BaseActivity() {
         replaceFragment(R.id.l_container, f)
     }
 
-    private fun openProfile() {}
+    private fun openProfile() {
+        val f = ProfileFragment()
+        replaceFragment(R.id.l_container, f)
+    }
 }

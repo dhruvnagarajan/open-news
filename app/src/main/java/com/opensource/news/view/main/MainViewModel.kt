@@ -19,4 +19,7 @@ class MainViewModel @Inject constructor(
 
     fun fetchNewsProfiles() =
         profileUseCase.getNewsProfiles()
+
+    fun createNewsProfile(newsProfile: NewsRequest) =
+        profileUseCase.createNewsProfile(newsProfile)
 }

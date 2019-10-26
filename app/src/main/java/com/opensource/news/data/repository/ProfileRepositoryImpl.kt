@@ -16,7 +16,6 @@ class ProfileRepositoryImpl @Inject constructor() : ProfileRepository {
     }
 
     override fun createNewsProfile(newsRequest: NewsRequest) {
-        TODO("not implemented")
     }
 
     override fun deleteNewsProfile(newsRequest: NewsRequest) {

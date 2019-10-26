@@ -3,6 +3,7 @@ package com.opensource.news.di.module.activity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.opensource.news.di.ViewModelKey
+import com.opensource.news.view.CreateProfileFragment
 import com.opensource.news.view.NewsFragment
 import com.opensource.news.view.ProfileFragment
 import com.opensource.news.view.main.MainActivity
@@ -31,4 +32,7 @@ abstract class MainModule {
 
     @ContributesAndroidInjector
     abstract fun profileFragment(): ProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun profileCreateFragment(): CreateProfileFragment
 }
