@@ -1,4 +1,4 @@
-package com.opensource.news.domain.model
+package com.opensource.news.domain.entity
 
 import com.google.gson.annotations.SerializedName
 

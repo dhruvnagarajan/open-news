@@ -1,8 +1,8 @@
-package data.repository
+package com.opensource.news.data.repository
 
 import com.opensource.news.util.NetworkUtils
-import data.network.NetworkSource
-import data.persistence.LocalSource
+import com.opensource.news.data.network.NetworkSource
+import com.opensource.news.data.persistence.DataSource
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -10,7 +10,7 @@ import javax.inject.Inject
  * @author Dhruvaraj Nagarajan
  */
 abstract class OfflineFirstRepository<K, V>(
-    private val localSource: LocalSource<K, V>,
+    private val dataSource: DataSource<K, V>,
     private val networkSource: NetworkSource<K, V>
 ) {
 
@@ -23,11 +23,11 @@ abstract class OfflineFirstRepository<K, V>(
      */
     fun getFromAnySource(key: K): Observable<V> {
         return if (networkUtils.isNetworkAvailable()) {
-            return localSource.get(key).mergeWith(networkSource.get(key))
+            return dataSource.get(key).mergeWith(networkSource.get(key))
                 .scan { localResponse, networkResponse ->
-                    localSource.put(key, networkResponse)
+                    dataSource.put(key, networkResponse)
                     return@scan networkResponse
                 }
-        } else localSource.get(key)
+        } else dataSource.get(key)
     }
 }

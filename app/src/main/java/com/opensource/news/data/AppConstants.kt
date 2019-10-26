@@ -1,4 +1,4 @@
-package data
+package com.opensource.news.data
 
 /**
  * @author Dhruvaraj Nagarajan

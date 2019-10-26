@@ -1,13 +1,15 @@
-package data.persistence
+package com.opensource.news.data.persistence
 
 import io.reactivex.Observable
 
 /**
  * @author Dhruvaraj Nagarajan
  */
-interface LocalSource<K, V> {
+interface DataSource<K, V> {
 
     fun get(key: K): Observable<V>
 
     fun put(key: K, value: V)
+
+    fun evict()
 }

@@ -1,6 +1,6 @@
-package data.network
+package com.opensource.news.data.network
 
-import com.opensource.news.domain.model.NewsResponse
+import com.opensource.news.domain.entity.NewsResponse
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET
@@ -11,7 +11,7 @@ import retrofit2.http.Query
  */
 interface ApiService {
 
-    @GET("top-headlines")
+    @GET("top-headlinesUseCase")
     fun getTopHeadlines(
         @Query("sources") sources: String? = null,
         @Query("q") q: String? = null,

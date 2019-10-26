@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.opensource.news.BuildConfig
 import dagger.Module
 import dagger.Provides
-import data.network.ApiService
+import com.opensource.news.data.network.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

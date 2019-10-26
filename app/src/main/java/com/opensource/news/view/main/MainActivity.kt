@@ -5,6 +5,7 @@ import android.view.Menu
 import com.dhruvnagarajan.androidcore.view.BaseActivity
 import com.dhruvnagarajan.nav.replaceFragment
 import com.opensource.news.R
+import com.opensource.news.domain.entity.NewsRequest
 import com.opensource.news.view.NewsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -42,6 +43,7 @@ class MainActivity : BaseActivity() {
 
     private fun openFeed() {
         val f = NewsFragment()
+        f.request = NewsRequest(q = "tesla")
         replaceFragment(R.id.l_container, f)
     }
 

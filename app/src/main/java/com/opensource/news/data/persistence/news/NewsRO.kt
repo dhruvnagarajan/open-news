@@ -1,4 +1,4 @@
-package data.persistence.news
+package com.opensource.news.data.persistence.news
 
 import io.realm.RealmList
 import io.realm.RealmObject

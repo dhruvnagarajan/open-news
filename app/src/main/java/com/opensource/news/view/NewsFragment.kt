@@ -11,7 +11,7 @@ import com.dhruvnagarajan.androidcore.util.ext.getActivityViewModel
 import com.dhruvnagarajan.androidcore.view.BaseFragment
 import com.dhruvnagarajan.nav.startActivity
 import com.opensource.news.R
-import com.opensource.news.domain.usecase.GetTopHeadlinesUseCase
+import com.opensource.news.domain.entity.NewsRequest
 import com.opensource.news.view.main.MainViewModel
 import com.opensource.news.view.main.NewsAdapter
 import com.opensource.news.view.web.WebViewActivity
@@ -29,6 +29,8 @@ class NewsFragment : BaseFragment() {
     private lateinit var viewModel: MainViewModel
 
     private lateinit var newsAdapter: NewsAdapter
+
+    lateinit var request: NewsRequest
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,12 +58,9 @@ class NewsFragment : BaseFragment() {
         view.rv_news.layoutManager = LinearLayoutManager(context)
         view.rv_news.adapter = newsAdapter
 
-        viewModel.fetchNews(GetTopHeadlinesUseCase.Params(q = "tesla"))
-            .attachObserver(getBaseObserver({
-                newsAdapter.newsList = it.data?.articles
-            }))
-
-        viewModel.fetchNews(GetTopHeadlinesUseCase.Params(q = "tesla"))
+        viewModel.fetchNews(request).attachObserver(getBaseObserver({
+            newsAdapter.newsList = it.articles
+        }))
     }
 
     override fun postSuccess() {

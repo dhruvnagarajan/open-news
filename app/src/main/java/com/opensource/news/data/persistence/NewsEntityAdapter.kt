@@ -1,11 +1,11 @@
-package data.adapter
+package com.opensource.news.data.persistence
 
-import com.opensource.news.domain.model.Article
-import com.opensource.news.domain.model.NewsResponse
-import com.opensource.news.domain.model.Source
-import data.persistence.news.ArticleRO
-import data.persistence.news.NewsRO
-import data.persistence.news.SourceRO
+import com.opensource.news.domain.entity.Article
+import com.opensource.news.domain.entity.NewsResponse
+import com.opensource.news.domain.entity.Source
+import com.opensource.news.data.persistence.news.ArticleRO
+import com.opensource.news.data.persistence.news.NewsRO
+import com.opensource.news.data.persistence.news.SourceRO
 import io.realm.RealmList
 
 /**

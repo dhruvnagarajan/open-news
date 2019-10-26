@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.opensource.news.R
-import com.opensource.news.domain.model.Article
+import com.opensource.news.domain.entity.Article
 import com.opensource.news.util.toDateAndTime
 import kotlinx.android.synthetic.main.row_news.view.*
 

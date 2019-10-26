@@ -1,4 +1,4 @@
-package data.network
+package com.opensource.news.data.network
 
 import io.reactivex.Observable
 
