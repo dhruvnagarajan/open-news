@@ -1,6 +1,6 @@
 package com.opensource.news.di
 
-import com.opensource.news.NewsApp
+import com.opensource.news.NewsApplication
 import com.opensource.news.di.module.AppModule
 import com.opensource.news.di.module.DataModule
 import com.opensource.news.di.module.NetworkModule
@@ -21,8 +21,8 @@ import javax.inject.Singleton
         NetworkModule::class
     ]
 )
-interface AppComponent : AndroidInjector<NewsApp> {
+interface AppComponent : AndroidInjector<NewsApplication> {
 
     @Component.Builder
-    abstract class Builder : AndroidInjector.Builder<NewsApp>()
+    abstract class Builder : AndroidInjector.Builder<NewsApplication>()
 }

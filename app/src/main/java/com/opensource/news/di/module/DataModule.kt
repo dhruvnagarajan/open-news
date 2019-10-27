@@ -1,5 +1,13 @@
 package com.opensource.news.di.module
 
+import android.content.Context
+import androidx.room.Room
+import com.dhruvnagarajan.androidcore.persistence.Cache
+import com.dhruvnagarajan.androidcore.persistence.DiskCache
+import com.dhruvnagarajan.androidplatform.di.Application
+import com.dhruvnagarajan.androidplatform.di.Disk
+import com.opensource.news.data.persistence.db.CacheLedgerDB
+import com.opensource.news.data.persistence.db.NewsDB
 import com.opensource.news.data.repository.NewsRepositoryImpl
 import com.opensource.news.data.repository.ProfileRepositoryImpl
 import com.opensource.news.domain.repository.NewsRepository
@@ -15,6 +23,31 @@ import javax.inject.Singleton
  */
 @Module
 class DataModule {
+
+    @Provides
+    @Singleton
+    @Disk
+    fun provideDiskCache(
+        @Application context: Context
+    ): Cache = DiskCache(context)
+
+    @Provides
+    @Singleton
+    fun provideCacheLedgerDB(@Application context: Context): CacheLedgerDB =
+        Room.databaseBuilder(
+            context,
+            CacheLedgerDB::class.java,
+            CacheLedgerDB::class.java.name
+        ).build()
+
+    @Provides
+    @Singleton
+    fun provideNewsDB(@Application context: Context): NewsDB =
+        Room.databaseBuilder(
+            context,
+            NewsDB::class.java,
+            NewsDB::class.java.name
+        ).build()
 
     @Provides
     fun newsRepository(newsRepositoryImpl: NewsRepositoryImpl): NewsRepository =

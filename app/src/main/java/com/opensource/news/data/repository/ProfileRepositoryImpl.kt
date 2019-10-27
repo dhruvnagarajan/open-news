@@ -1,6 +1,6 @@
 package com.opensource.news.data.repository
 
-import com.opensource.news.domain.entity.NewsRequest
+import com.opensource.news.domain.entity.NewsProfile
 import com.opensource.news.domain.repository.ProfileRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,14 +11,14 @@ import javax.inject.Singleton
 @Singleton
 class ProfileRepositoryImpl @Inject constructor() : ProfileRepository {
 
-    override fun getNewsProfiles(): List<NewsRequest> {
+    override fun getNewsProfiles(): List<NewsProfile> {
         TODO("not implemented")
     }
 
-    override fun createNewsProfile(newsRequest: NewsRequest) {
+    override fun createNewsProfile(newsProfile: NewsProfile) {
     }
 
-    override fun deleteNewsProfile(newsRequest: NewsRequest) {
+    override fun deleteNewsProfile(newsProfile: NewsProfile) {
         TODO("not implemented")
     }
 }

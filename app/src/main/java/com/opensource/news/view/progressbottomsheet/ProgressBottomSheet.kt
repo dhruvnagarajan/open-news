@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.dhruvnagarajan.androidcore.view.BaseBottomSheetFragment
+import com.dhruvnagarajan.androidplatform.view.BaseBottomSheetFragment
 import com.opensource.news.R
 import kotlinx.android.synthetic.main.bottom_sheet_progress.view.*
 

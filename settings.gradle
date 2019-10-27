@@ -1,1 +1,1 @@
-include ':app', ':domain', ':androidcore', ':sec', ':nav'
+include ':app', ':l4domain', ':l2core', ':l1sec', ':l3framework'

@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 29
@@ -59,11 +58,12 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
 
+    implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.github.bumptech.glide:glide:4.10.0'
 
-    implementation project(':androidcore')
-    implementation project(':nav')
-    implementation project(':domain')
+    implementation project(':l3framework')
+    implementation project(':l2core')
+    implementation project(':l4domain')
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

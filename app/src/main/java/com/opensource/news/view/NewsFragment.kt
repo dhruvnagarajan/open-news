@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dhruvnagarajan.androidcore.util.ViewModelFactory
-import com.dhruvnagarajan.androidcore.util.ext.attachObserver
-import com.dhruvnagarajan.androidcore.util.ext.getActivityViewModel
-import com.dhruvnagarajan.androidcore.view.BaseFragment
-import com.dhruvnagarajan.nav.startActivity
+import com.dhruvnagarajan.androidplatform.util.ViewModelFactory
+import com.dhruvnagarajan.androidplatform.util.ext.attachObserver
+import com.dhruvnagarajan.androidplatform.util.ext.getActivityViewModel
+import com.dhruvnagarajan.androidplatform.view.BaseFragment
+import com.dhruvnagarajan.androidplatform.util.ext.startActivity
 import com.opensource.news.R
-import com.opensource.news.domain.entity.NewsRequest
+import com.opensource.news.domain.entity.NewsProfile
 import com.opensource.news.view.main.MainViewModel
 import com.opensource.news.view.main.NewsAdapter
 import com.opensource.news.view.web.WebViewActivity
@@ -30,7 +30,7 @@ class NewsFragment : BaseFragment() {
 
     private lateinit var newsAdapter: NewsAdapter
 
-    lateinit var request: NewsRequest
+    lateinit var profile: NewsProfile
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,16 +48,16 @@ class NewsFragment : BaseFragment() {
         val context = context!!
 
         newsAdapter = NewsAdapter(context) { clickedArticle ->
-            // open article's details in a WebView
+            // open newsArticle's details in a WebView
             startActivity<WebViewActivity>(context) {
-                putExtra(WebViewActivity.TITLE, clickedArticle.article.title)
-                putExtra(WebViewActivity.URL, clickedArticle.article.url)
+                putExtra(WebViewActivity.TITLE, clickedArticle.newsArticle.title)
+                putExtra(WebViewActivity.URL, clickedArticle.newsArticle.url)
             }
         }
         view.rv_news.layoutManager = LinearLayoutManager(context)
         view.rv_news.adapter = newsAdapter
 
-        viewModel.fetchNews(request).attachObserver(getBaseObserver({
+        viewModel.fetchNews(profile).attachObserver(getBaseObserver({
             newsAdapter.newsList = it
         }))
     }

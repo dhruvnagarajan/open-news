@@ -2,7 +2,7 @@ package com.opensource.news.di.module.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
-import com.opensource.news.di.ViewModelKey
+import com.dhruvnagarajan.androidplatform.di.ViewModelKey
 import com.opensource.news.view.main.MainViewModel
 import com.opensource.news.view.web.WebViewActivity
 import dagger.Binds

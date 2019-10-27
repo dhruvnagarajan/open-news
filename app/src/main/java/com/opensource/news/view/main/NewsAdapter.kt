@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.opensource.news.R
-import com.opensource.news.domain.entity.Article
-import com.opensource.news.domain.entity.NewsRequest
+import com.opensource.news.domain.entity.NewsArticle
+import com.opensource.news.domain.entity.NewsProfile
 import com.opensource.news.util.toDateAndTime
 import kotlinx.android.synthetic.main.row_news.view.*
 
@@ -41,21 +41,21 @@ class NewsAdapter(
             itemView.container.setOnClickListener { onClick(data) }
 
             Glide.with(context)
-                .load(data.article.urlToImage)
+                .load(data.newsArticle.urlToImage)
                 .placeholder(R.drawable.ic_twotone_blur_on_24px)
                 .centerCrop()
                 .into(itemView.iv_feature_image)
 
-            itemView.tv_source.text = data.request.q
-            itemView.tv_time.text = data.article.publishedAt?.toDateAndTime()
-            itemView.tv_author.text = data.article.author
-            itemView.tv_headline.text = data.article.title
-            itemView.tv_gist.text = data.article.content
+            itemView.tv_source.text = data.profile.q
+            itemView.tv_time.text = data.newsArticle.publishedAt?.toDateAndTime()
+            itemView.tv_author.text = data.newsArticle.author
+            itemView.tv_headline.text = data.newsArticle.title
+            itemView.tv_gist.text = data.newsArticle.content
         }
     }
 
     data class Item(
-        val request: NewsRequest,
-        val article: Article
+        val profile: NewsProfile,
+        val newsArticle: NewsArticle
     )
 }

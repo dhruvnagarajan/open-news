@@ -1,7 +1,7 @@
 package com.opensource.news.view.main
 
-import com.dhruvnagarajan.androidcore.view.BaseViewModel
-import com.opensource.news.domain.entity.NewsRequest
+import com.dhruvnagarajan.androidplatform.view.BaseViewModel
+import com.opensource.news.domain.entity.NewsProfile
 import com.opensource.news.domain.usecase.HeadlinesUseCase
 import com.opensource.news.domain.usecase.ProfileUseCase
 import javax.inject.Inject
@@ -14,12 +14,12 @@ class MainViewModel @Inject constructor(
     val profileUseCase: ProfileUseCase
 ) : BaseViewModel() {
 
-    fun fetchNews(request: NewsRequest) =
-        headlinesUseCase.getTopHeadlines(request)
+    fun fetchNews(profile: NewsProfile) =
+        headlinesUseCase.getTopHeadlines(profile)
             .map {
                 val list = ArrayList<NewsAdapter.Item>()
-                for (article in it.articles!!) {
-                    list.add(NewsAdapter.Item(request, article))
+                for (article in it.newsArticles!!) {
+                    list.add(NewsAdapter.Item(profile, article))
                 }
                 list
             }
@@ -27,6 +27,6 @@ class MainViewModel @Inject constructor(
     fun fetchNewsProfiles() =
         profileUseCase.getNewsProfiles()
 
-    fun createNewsProfile(newsProfile: NewsRequest) =
+    fun createNewsProfile(newsProfile: NewsProfile) =
         profileUseCase.createNewsProfile(newsProfile)
 }

@@ -1,33 +1,62 @@
 package com.opensource.news.data.repository
 
+import android.content.Context
+import com.opensource.news.data.network.RemoteDataSource
+import com.opensource.news.data.persistence.LocalDataSource
+import com.opensource.news.data.persistence.db.CacheLedgerDB
+import com.opensource.news.data.persistence.db.entity.toEntity
+import com.opensource.news.domain.entity.CacheLedger
 import com.opensource.news.util.NetworkUtils
-import com.opensource.news.data.network.NetworkSource
-import com.opensource.news.data.persistence.DataSource
 import io.reactivex.Observable
-import javax.inject.Inject
 
 /**
  * @author Dhruvaraj Nagarajan
  */
 abstract class OfflineFirstRepository<K, V>(
-    private val dataSource: DataSource<K, V>,
-    private val networkSource: NetworkSource<K, V>
+    val context: Context,
+    cacheLedgerDB: CacheLedgerDB,
+    private val localLocalDataSource: LocalDataSource<K, V>,
+    private val remoteDataSource: RemoteDataSource<K, V>
 ) {
 
-    @Inject
-    lateinit var networkUtils: NetworkUtils
+    private val dao = cacheLedgerDB.cacheDao()
 
-    /**
-     * Return from local source immediately in all cases.
-     * If internet is available, then update local source with new data, in background.
-     */
-    fun getFromAnySource(key: K): Observable<V> {
-        return if (networkUtils.isNetworkAvailable()) {
-            return dataSource.get(key).mergeWith(networkSource.get(key))
-                .scan { localResponse, networkResponse ->
-                    dataSource.put(key, networkResponse)
-                    return@scan networkResponse
+    fun getFromLocalOrRemote(key: K, forceUpdate: Boolean = false): Observable<V> {
+        return if (forceUpdate) {
+            return remoteDataSource.get(key)
+                .map {
+                    dao.insert(
+                        CacheLedger(
+                            key.toString(),
+                            System.currentTimeMillis(),
+                            null,
+                            null
+                        ).toEntity()
+                    )
+                    it
                 }
-        } else dataSource.get(key)
+                .map { remoteResponse ->
+                    localLocalDataSource.put(key, remoteResponse)
+                    remoteResponse
+                }
+        } else {
+            if (NetworkUtils.isNetworkAvailable(context)) {
+                return localLocalDataSource.get(key).mergeWith(remoteDataSource.get(key))
+                    .scan { localResponse, remoteResponse ->
+                        localLocalDataSource.put(key, remoteResponse)
+
+                        dao.insert(
+                            CacheLedger(
+                                key.toString(),
+                                System.currentTimeMillis(),
+                                null,
+                                null
+                            ).toEntity()
+                        )
+
+                        remoteResponse
+                    }
+            } else localLocalDataSource.get(key)
+        }
     }
 }

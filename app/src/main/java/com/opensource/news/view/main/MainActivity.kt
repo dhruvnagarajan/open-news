@@ -2,10 +2,10 @@ package com.opensource.news.view.main
 
 import android.os.Bundle
 import android.view.Menu
-import com.dhruvnagarajan.androidcore.view.BaseActivity
-import com.dhruvnagarajan.nav.replaceFragment
+import com.dhruvnagarajan.androidplatform.util.ext.replaceFragment
+import com.dhruvnagarajan.androidplatform.view.BaseActivity
 import com.opensource.news.R
-import com.opensource.news.domain.entity.NewsRequest
+import com.opensource.news.domain.entity.NewsProfile
 import com.opensource.news.view.NewsFragment
 import com.opensource.news.view.ProfileFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,8 +19,12 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        nav.menu.add(Menu.NONE, 1, Menu.NONE, "Feed")
-        nav.menu.add(Menu.NONE, 0, Menu.NONE, "Profile")
+        nav.menu
+            .add(Menu.NONE, 1, Menu.NONE, "Feed")
+            .icon = resources.getDrawable(R.drawable.ic_twotone_blur_on_24px)
+        nav.menu
+            .add(Menu.NONE, 0, Menu.NONE, "Profile")
+            .icon = resources.getDrawable(R.drawable.ic_twotone_blur_on_24px)
 
         nav.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -44,7 +48,7 @@ class MainActivity : BaseActivity() {
 
     private fun openFeed() {
         val f = NewsFragment()
-        f.request = NewsRequest(q = "tesla")
+        f.profile = NewsProfile(q = "tesla")
         replaceFragment(R.id.l_container, f)
     }
 

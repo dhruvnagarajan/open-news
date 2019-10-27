@@ -11,7 +11,7 @@ import retrofit2.http.Query
  */
 interface ApiService {
 
-    @GET("top-headlinesUseCase")
+    @GET("top-headlines")
     fun getTopHeadlines(
         @Query("sources") sources: String? = null,
         @Query("q") q: String? = null,

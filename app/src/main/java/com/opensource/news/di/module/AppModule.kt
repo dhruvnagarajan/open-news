@@ -1,7 +1,8 @@
 package com.opensource.news.di.module
 
 import android.content.Context
-import com.opensource.news.NewsApp
+import com.opensource.news.NewsApplication
+import com.dhruvnagarajan.androidplatform.di.Application
 import dagger.Binds
 import dagger.Module
 
@@ -12,5 +13,6 @@ import dagger.Module
 abstract class AppModule {
 
     @Binds
-    abstract fun provideAppContext(app: NewsApp): Context
+    @Application
+    abstract fun provideAppContext(application: NewsApplication): Context
 }

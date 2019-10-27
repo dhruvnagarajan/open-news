@@ -6,8 +6,8 @@ import android.view.MenuItem
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.dhruvnagarajan.androidcore.view.BaseActivity
-import com.dhruvnagarajan.androidcore.view.BaseViewModel
+import com.dhruvnagarajan.androidplatform.view.BaseActivity
+import com.dhruvnagarajan.androidplatform.view.BaseViewModel
 import com.opensource.news.R
 import kotlinx.android.synthetic.main.activity_web.*
 
@@ -26,7 +26,7 @@ class WebViewActivity : BaseActivity() {
 
         webview.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                showLoading(BaseViewModel.ViewState.Loading("Fetching article..."))
+                showLoading(BaseViewModel.ViewState.Loading("Fetching newsArticle..."))
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {

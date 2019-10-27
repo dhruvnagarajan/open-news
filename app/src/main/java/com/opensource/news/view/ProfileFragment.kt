@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dhruvnagarajan.androidcore.util.ViewModelFactory
-import com.dhruvnagarajan.androidcore.util.ext.getActivityViewModel
-import com.dhruvnagarajan.androidcore.view.BaseFragment
+import com.dhruvnagarajan.androidplatform.util.ViewModelFactory
+import com.dhruvnagarajan.androidplatform.util.ext.getActivityViewModel
+import com.dhruvnagarajan.androidplatform.view.BaseFragment
 import com.opensource.news.R
 import com.opensource.news.view.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_profile.view.*

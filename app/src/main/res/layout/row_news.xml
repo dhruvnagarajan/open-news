@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:application="http://schemas.android.com/apk/res-auto"
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        app:cardCornerRadius="3dp"
-        app:cardElevation="3dp">
+        application:cardCornerRadius="3dp"
+        application:cardElevation="3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -16,9 +16,9 @@
                 android:id="@+id/iv_feature_image"
                 android:layout_width="102dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                application:layout_constraintBottom_toBottomOf="parent"
+                application:layout_constraintLeft_toLeftOf="parent"
+                application:layout_constraintTop_toTopOf="parent" />
 
         <TextView
                 android:id="@+id/tv_source"
@@ -28,9 +28,9 @@
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="@id/tv_headline"
-                app:layout_constraintRight_toLeftOf="@id/tv_time"
-                app:layout_constraintTop_toTopOf="parent" />
+                application:layout_constraintLeft_toLeftOf="@id/tv_headline"
+                application:layout_constraintRight_toLeftOf="@id/tv_time"
+                application:layout_constraintTop_toTopOf="parent" />
 
         <TextView
                 android:id="@+id/tv_time"
@@ -41,9 +41,9 @@
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                app:layout_constraintLeft_toRightOf="@id/tv_source"
-                app:layout_constraintRight_toLeftOf="@id/tv_author"
-                app:layout_constraintTop_toTopOf="parent" />
+                application:layout_constraintLeft_toRightOf="@id/tv_source"
+                application:layout_constraintRight_toLeftOf="@id/tv_author"
+                application:layout_constraintTop_toTopOf="parent" />
 
         <TextView
                 android:id="@+id/tv_author"
@@ -54,9 +54,9 @@
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                app:layout_constraintLeft_toRightOf="@id/tv_time"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                application:layout_constraintLeft_toRightOf="@id/tv_time"
+                application:layout_constraintRight_toRightOf="parent"
+                application:layout_constraintTop_toTopOf="parent" />
 
         <TextView
                 android:id="@+id/tv_headline"
@@ -71,9 +71,9 @@
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@id/iv_feature_image"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_source" />
+                application:layout_constraintLeft_toRightOf="@id/iv_feature_image"
+                application:layout_constraintRight_toRightOf="parent"
+                application:layout_constraintTop_toBottomOf="@id/tv_source" />
 
         <TextView
                 android:id="@+id/tv_gist"
@@ -85,8 +85,8 @@
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="@id/tv_headline"
-                app:layout_constraintRight_toRightOf="@id/tv_headline"
-                app:layout_constraintTop_toBottomOf="@id/tv_headline" />
+                application:layout_constraintLeft_toLeftOf="@id/tv_headline"
+                application:layout_constraintRight_toRightOf="@id/tv_headline"
+                application:layout_constraintTop_toBottomOf="@id/tv_headline" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

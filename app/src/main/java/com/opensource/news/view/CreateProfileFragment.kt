@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dhruvnagarajan.androidcore.util.ViewModelFactory
-import com.dhruvnagarajan.androidcore.util.ext.attachObserver
-import com.dhruvnagarajan.androidcore.util.ext.getActivityViewModel
-import com.dhruvnagarajan.androidcore.view.BaseBottomSheetFragment
+import com.dhruvnagarajan.androidplatform.util.ViewModelFactory
+import com.dhruvnagarajan.androidplatform.util.ext.attachObserver
+import com.dhruvnagarajan.androidplatform.util.ext.getActivityViewModel
+import com.dhruvnagarajan.androidplatform.view.BaseBottomSheetFragment
 import com.opensource.news.R
-import com.opensource.news.domain.entity.NewsRequest
+import com.opensource.news.domain.entity.NewsProfile
 import com.opensource.news.view.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_profile_create.*
 import kotlinx.android.synthetic.main.fragment_profile_create.view.*
@@ -55,7 +55,7 @@ class CreateProfileFragment : BaseBottomSheetFragment() {
                 return@setOnClickListener
             }
 
-            val profile = NewsRequest(sources, q, language, country, category)
+            val profile = NewsProfile(sources, q, language, country, category)
 
             viewModel.createNewsProfile(profile).attachObserver(getBaseObserver({
                 postSuccess("Profile Created.")
