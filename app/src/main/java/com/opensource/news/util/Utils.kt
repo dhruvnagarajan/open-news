@@ -11,8 +11,8 @@ import javax.inject.Inject
 fun String.toDateAndTime(): String {
     val dateEndPos = this.indexOf('T')
     val date = this.substring(0, dateEndPos)
-    val time = this.substring(dateEndPos, this.length - 1)
-    return date
+    val time = this.substring(dateEndPos + 1, this.length - 1)
+    return "$time, $date"
 }
 
 class NetworkUtils @Inject constructor(private val context: Context) {

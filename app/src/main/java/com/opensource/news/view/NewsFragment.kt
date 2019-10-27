@@ -50,15 +50,15 @@ class NewsFragment : BaseFragment() {
         newsAdapter = NewsAdapter(context) { clickedArticle ->
             // open article's details in a WebView
             startActivity<WebViewActivity>(context) {
-                putExtra(WebViewActivity.TITLE, clickedArticle.title)
-                putExtra(WebViewActivity.URL, clickedArticle.url)
+                putExtra(WebViewActivity.TITLE, clickedArticle.article.title)
+                putExtra(WebViewActivity.URL, clickedArticle.article.url)
             }
         }
         view.rv_news.layoutManager = LinearLayoutManager(context)
         view.rv_news.adapter = newsAdapter
 
         viewModel.fetchNews(request).attachObserver(getBaseObserver({
-            newsAdapter.newsList = it.articles
+            newsAdapter.newsList = it
         }))
     }
 

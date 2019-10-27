@@ -21,27 +21,64 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+                android:id="@+id/tv_source"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Source"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="@id/tv_headline"
+                app:layout_constraintRight_toLeftOf="@id/tv_time"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="Time"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@id/tv_source"
+                app:layout_constraintRight_toLeftOf="@id/tv_author"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+                android:id="@+id/tv_author"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:hint="Author"
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@id/tv_time"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
                 android:id="@+id/tv_headline"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:hint="Headline"
                 android:maxLines="2"
-                android:padding="8dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="8dp"
+                android:paddingRight="8dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toRightOf="@id/iv_feature_image"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/tv_source" />
 
         <TextView
                 android:id="@+id/tv_gist"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
                 android:ellipsize="end"
                 android:hint="Gist"
                 android:maxLines="3"
@@ -51,18 +88,5 @@
                 app:layout_constraintLeft_toLeftOf="@id/tv_headline"
                 app:layout_constraintRight_toRightOf="@id/tv_headline"
                 app:layout_constraintTop_toBottomOf="@id/tv_headline" />
-
-        <TextView
-                android:id="@+id/tv_meta"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:hint="Meta"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintLeft_toLeftOf="@id/tv_headline"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_gist" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

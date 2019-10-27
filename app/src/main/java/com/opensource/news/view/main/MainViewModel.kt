@@ -16,6 +16,13 @@ class MainViewModel @Inject constructor(
 
     fun fetchNews(request: NewsRequest) =
         headlinesUseCase.getTopHeadlines(request)
+            .map {
+                val list = ArrayList<NewsAdapter.Item>()
+                for (article in it.articles!!) {
+                    list.add(NewsAdapter.Item(request, article))
+                }
+                list
+            }
 
     fun fetchNewsProfiles() =
         profileUseCase.getNewsProfiles()
