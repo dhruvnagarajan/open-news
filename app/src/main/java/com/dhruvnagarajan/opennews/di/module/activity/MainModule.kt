@@ -3,6 +3,8 @@ package com.dhruvnagarajan.opennews.di.module.activity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import com.dhruvnagarajan.androidplatform.di.ViewModelKey
+import com.dhruvnagarajan.opennews.router.RootRouter
+import com.dhruvnagarajan.opennews.router.RootRouterImpl
 import com.dhruvnagarajan.opennews.view.CreateProfileFragment
 import com.dhruvnagarajan.opennews.view.NewsFragment
 import com.dhruvnagarajan.opennews.view.ProfileFragment
@@ -21,6 +23,9 @@ abstract class MainModule {
 
     @Binds
     abstract fun provideActivity(mainActivity: MainActivity): AppCompatActivity
+
+    @Binds
+    abstract fun provideRootRouter(rootRouterImpl: RootRouterImpl): RootRouter
 
     @Binds
     @IntoMap

@@ -1,1 +1,2 @@
-include ':app', ':l4.opennews.domain', ':l2.core', ':l1.sec', ':l3.framework', ':l2.pubsub', ':l3.clickstream'
+include ':app', ':l4.opennews.domain', ':l2.core', ':l1.sec', ':l3.framework', ':l3.clickstream', ':redux.android'
+project(':redux.android').projectDir=new File(settingsDir, "../../PUBSUB/pubsub1/redux.android")

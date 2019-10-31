@@ -24,6 +24,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+    }
 }
 
 dependencies {
@@ -49,7 +52,7 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:$timber_version"
 
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "com.google.code.gson:gson:$gson_v"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -61,6 +64,11 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.github.bumptech.glide:glide:4.10.0'
 
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.10.1'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.10.0'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.0'
+
+    implementation project(':redux.android')
     implementation project(':l3.framework')
     implementation project(':l2.core')
     implementation project(':l4.opennews.domain')
