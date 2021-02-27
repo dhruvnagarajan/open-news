@@ -10,6 +10,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('appsecrets/local.properties').newDataInputStream())
+
     defaultConfig {
         applicationId "com.opensource.news"
         minSdkVersion 15
@@ -17,6 +21,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "OPENNEWSAPIKEY", properties.getProperty('OPENNEWSAPIKEY')
     }
     buildTypes {
         release {

@@ -1,0 +1,3 @@
+[submodule "appsecrets"]
+	path = appsecrets
+	url = git@github.com:dhruvnagarajan/appsecrets.git
