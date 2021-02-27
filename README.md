@@ -29,3 +29,7 @@ News home page is built with `RecyclerView` and `CardView`, which show a vertica
 Each news article opens up in a child activity sporting a full-screen webview to fetch article details.
 
 While the website loads, its progress is shown to the user using a `BottomSheetDialogFragment`.
+
+# Setup
+
+Get an API key from newsapi.org and add OPENNEWSAPIKEY String field in appsecrets/local.properties.
