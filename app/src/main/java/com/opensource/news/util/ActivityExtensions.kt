@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 
 fun AppCompatActivity.showToast(message: String, duration: Int = Toast.LENGTH_SHORT) {

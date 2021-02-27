@@ -1,7 +1,7 @@
 package com.opensource.news.domain.model
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 data class BaseResponse<T>(
     val status: Status,

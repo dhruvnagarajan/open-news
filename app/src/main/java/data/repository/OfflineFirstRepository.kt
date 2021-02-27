@@ -7,7 +7,7 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 abstract class OfflineFirstRepository<K, V>(
     private val localSource: LocalSource<K, V>,

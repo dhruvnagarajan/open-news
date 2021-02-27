@@ -3,7 +3,7 @@ package data.persistence
 import io.reactivex.Observable
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 interface LocalSource<K, V> {
 

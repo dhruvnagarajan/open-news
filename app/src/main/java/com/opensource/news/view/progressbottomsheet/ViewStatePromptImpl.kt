@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import javax.inject.Inject
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 class ViewStatePromptImpl @Inject constructor() : ViewStatePrompt {
 
@@ -12,7 +12,7 @@ class ViewStatePromptImpl @Inject constructor() : ViewStatePrompt {
     lateinit var activity: AppCompatActivity
 
     private val tag = ProgressBottomSheet::class.java.name
-    private val progressBottomSheet = ProgressBottomSheet()
+    private val progressBottomSheet = ProgressBottomSheet().apply { onCancelled = { } }
 
     override fun showLoading(message: String?) {
         if (activity.supportFragmentManager.findFragmentByTag(tag) == null)

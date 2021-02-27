@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 interface ApiService {
 

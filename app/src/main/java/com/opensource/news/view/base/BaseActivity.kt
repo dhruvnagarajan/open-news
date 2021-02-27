@@ -8,32 +8,28 @@ import javax.inject.Inject
 
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
-abstract class BaseActivity<T : BaseViewModel> : DaggerXActivity() {
+abstract class BaseActivity : DaggerXActivity() {
 
     @Inject
     lateinit var viewStatePrompt: ViewStatePrompt
 
-    lateinit var viewModel: T
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
-        viewModel = provideViewModel()
-        onCreateView(savedInstanceState)
-
         observeViewState()
+        onCreateView(savedInstanceState)
     }
 
     abstract fun getLayout(): Int
 
-    abstract fun provideViewModel(): T
+    abstract fun provideViewModel(): BaseViewModel
 
     abstract fun onCreateView(bundle: Bundle?)
 
     private fun observeViewState() {
-        viewModel.viewStateLiveData.observe(this, Observer {
+        provideViewModel().viewStateLiveData.observe(this, Observer {
             when (it?.viewStateType) {
                 BaseViewModel.ViewStateType.NONE -> {
                     hideError()

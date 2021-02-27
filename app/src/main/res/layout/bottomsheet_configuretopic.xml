@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:text="@string/caption_configure_title"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/tv_title"
+            android:padding="12dp"
+            android:layout_height="wrap_content" />
+
+    <ImageView
+            android:layout_width="42dp"
+            android:padding="8dp"
+            android:tint="@color/colorAccent"
+            android:src="@drawable/ic_twotone_close_24px"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/iv_close"
+            android:layout_height="42dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:hint="Query"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            android:id="@+id/til_query"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/et_query"
+                android:textSize="14sp"
+                android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:hint="Sources"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_query"
+            android:id="@+id/til_sources"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/et_sources"
+                android:textSize="14sp"
+                android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:hint="Language"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_sources"
+            android:id="@+id/til_language"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:textSize="14sp"
+                android:id="@+id/et_language"
+                android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:hint="Country"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_language"
+            android:id="@+id/til_country"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/et_country"
+                android:textSize="14sp"
+                android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:hint="Category"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_country"
+            android:id="@+id/til_category"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:textSize="14sp"
+                android:id="@+id/et_category"
+                android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:id="@+id/b_save"
+            android:textSize="12sp"
+            android:text="Save"
+            android:layout_marginTop="12dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_category"
+            android:layout_height="wrap_content" />
+</androidx.constraintlayout.widget.ConstraintLayout>

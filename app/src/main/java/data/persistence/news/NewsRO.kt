@@ -4,7 +4,7 @@ import io.realm.RealmList
 import io.realm.RealmObject
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 open class NewsRO(
     var status: String? = null,

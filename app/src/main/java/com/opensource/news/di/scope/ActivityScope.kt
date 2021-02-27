@@ -3,7 +3,7 @@ package com.opensource.news.di.scope
 import javax.inject.Scope
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 @Scope
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)

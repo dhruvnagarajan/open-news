@@ -11,7 +11,7 @@ import dagger.android.HasAndroidInjector;
 import javax.inject.Inject;
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 public abstract class DaggerXActivity extends AppCompatActivity implements HasAndroidInjector {
 

@@ -12,7 +12,7 @@ import com.opensource.news.util.toDateAndTime
 import kotlinx.android.synthetic.main.row_news.view.*
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 class NewsAdapter(
     private val context: Context,
@@ -38,22 +38,18 @@ class NewsAdapter(
 
         fun bind(data: Article) {
             itemView.container.setOnClickListener { onClick(data) }
-
+            itemView.tv_headline.text = data.title
+//            itemView.tv_gist.text = data.content
+            itemView.tv_meta.text = getMetaInfo(data)
             Glide.with(context)
                 .load(data.urlToImage)
                 .placeholder(R.drawable.ic_twotone_blur_on_24px)
                 .centerCrop()
                 .into(itemView.iv_feature_image)
-
-            itemView.tv_headline.text = data.title
-
-            itemView.tv_gist.text = data.content
-
-            itemView.tv_meta.text = getMetaInfo(data)
         }
 
         private fun getMetaInfo(data: Article): String {
-            return data.publishedAt?.toDateAndTime() + "\n" + data.source?.name
+            return "${data.source?.name}, ${data.publishedAt?.toDateAndTime()}"
         }
     }
 }

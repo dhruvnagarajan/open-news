@@ -10,7 +10,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 @Module(includes = [CommonActivityModule::class])
 abstract class WebModule {

@@ -3,7 +3,7 @@ package com.opensource.news.domain.model
 import com.google.gson.annotations.SerializedName
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 data class NewsResponse(
     @SerializedName("status")

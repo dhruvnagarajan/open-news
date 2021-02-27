@@ -5,7 +5,7 @@ import data.persistence.LocalSource
 import io.reactivex.Observable
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 class BitmapLocalSourceImpl : LocalSource<String, Bitmap> {
 

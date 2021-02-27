@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 @Module
 abstract class CommonActivityModule {

@@ -11,16 +11,18 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 @SuppressLint("CheckResult")
-class MainViewModel @Inject constructor(private val getTopHeadlines: GetTopHeadlinesUseCase) : BaseViewModel() {
+class MainViewModel @Inject constructor(
+    private val getTopHeadlines: GetTopHeadlinesUseCase
+) : BaseViewModel() {
 
     val newsLiveData by lazy { MutableLiveData<NewsResponse>() }
 
-    fun fetchNews(params: GetTopHeadlinesUseCase.Params) {
+    fun fetchNews() {
         postLoadingViewState("Fetching Top Highlights...")
-        getTopHeadlines.execute(params)
+        getTopHeadlines.execute(Unit)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

@@ -3,7 +3,7 @@ package data.network
 import io.reactivex.Observable
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 interface NetworkSource<K, V> {
 

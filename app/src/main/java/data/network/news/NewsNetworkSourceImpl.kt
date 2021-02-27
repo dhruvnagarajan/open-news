@@ -11,7 +11,7 @@ import io.reactivex.functions.Function
 import javax.inject.Inject
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 class NewsNetworkSourceImpl @Inject constructor(private val apiService: ApiService) :
     NetworkSource<GetTopHeadlinesUseCase.Params, BaseResponse<NewsResponse>> {

@@ -9,7 +9,7 @@ import data.persistence.news.SourceRO
 import io.realm.RealmList
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 fun List<Article>.toStorage(): RealmList<ArticleRO> {
     val storageList = RealmList<ArticleRO>()

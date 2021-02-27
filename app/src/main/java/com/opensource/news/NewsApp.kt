@@ -6,7 +6,7 @@ import dagger.android.support.DaggerApplication
 import io.realm.Realm
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 class NewsApp : DaggerApplication() {
 

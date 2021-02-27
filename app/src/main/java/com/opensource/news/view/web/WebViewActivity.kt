@@ -15,17 +15,21 @@ import kotlinx.android.synthetic.main.activity_web.*
 import javax.inject.Inject
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
-class WebViewActivity : BaseActivity<BaseViewModel>() {
+class WebViewActivity : BaseActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
+    private lateinit var viewModel: BaseViewModel
+
     override fun getLayout(): Int = R.layout.activity_web
 
-    override fun provideViewModel(): BaseViewModel =
-        ViewModelProviders.of(this, viewModelFactory)[BaseViewModel::class.java]
+    override fun provideViewModel(): BaseViewModel {
+        viewModel = ViewModelProviders.of(this, viewModelFactory)[BaseViewModel::class.java]
+        return viewModel
+    }
 
     override fun onCreateView(bundle: Bundle?) {
         val title = intent?.extras?.getString(TITLE) ?: resources.getString(R.string.app_name)
@@ -37,7 +41,7 @@ class WebViewActivity : BaseActivity<BaseViewModel>() {
                 viewModel.viewStateLiveData.postValue(
                     BaseViewModel.ViewState(
                         BaseViewModel.ViewStateType.LOADING,
-                        "Loading website..."
+                        "Fetching source..."
                     )
                 )
             }

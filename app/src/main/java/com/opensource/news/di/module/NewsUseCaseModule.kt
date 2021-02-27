@@ -7,7 +7,7 @@ import data.repository.NewsRepositoryImpl
 import javax.inject.Singleton
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 @Module
 class NewsUseCaseModule {

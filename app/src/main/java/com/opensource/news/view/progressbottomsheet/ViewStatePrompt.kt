@@ -1,7 +1,7 @@
 package com.opensource.news.view.progressbottomsheet
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 interface ViewStatePrompt {
 

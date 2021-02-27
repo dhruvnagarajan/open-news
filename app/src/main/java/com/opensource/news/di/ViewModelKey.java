@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel;
 import dagger.MapKey;
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 @MapKey
 public @interface ViewModelKey {

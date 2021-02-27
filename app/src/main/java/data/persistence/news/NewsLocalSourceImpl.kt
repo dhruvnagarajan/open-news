@@ -11,7 +11,7 @@ import io.realm.Realm
 import javax.inject.Inject
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 class NewsLocalSourceImpl @Inject constructor() :
     LocalSource<GetTopHeadlinesUseCase.Params, BaseResponse<NewsResponse>> {

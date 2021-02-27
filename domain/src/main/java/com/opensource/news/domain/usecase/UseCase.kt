@@ -3,7 +3,7 @@ package com.opensource.news.domain.usecase
 import io.reactivex.Observable
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 interface UseCase<Params, Result> {
 

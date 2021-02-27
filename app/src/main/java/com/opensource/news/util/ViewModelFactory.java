@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import java.util.Map;
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 public class ViewModelFactory implements ViewModelProvider.Factory {
 

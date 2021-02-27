@@ -9,7 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.android.support.DaggerAppCompatDialogFragment
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 abstract class BaseBottomSheetDialogFragment : DaggerAppCompatDialogFragment() {
 

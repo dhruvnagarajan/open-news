@@ -11,14 +11,15 @@ import androidx.lifecycle.ViewModelProviders
 import com.opensource.news.R
 import com.opensource.news.view.base.BaseBottomSheetDialogFragment
 import com.opensource.news.view.base.BaseViewModel
-import kotlinx.android.synthetic.main.bottom_sheet_progress.view.*
+import kotlinx.android.synthetic.main.bottomsheet_progress.view.*
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 class ProgressBottomSheet : BaseBottomSheetDialogFragment() {
 
     lateinit var viewModel: BaseViewModel
+    lateinit var onCancelled: () -> Unit
 
     var message: String? = null
 
@@ -27,18 +28,17 @@ class ProgressBottomSheet : BaseBottomSheetDialogFragment() {
     private lateinit var tv_message: TextView
 
     override fun inflateView(inflater: LayoutInflater, container: ViewGroup?): View {
-        return inflater.inflate(R.layout.bottom_sheet_progress, container, false)
+        return inflater.inflate(R.layout.bottomsheet_progress, container, false)
     }
 
     override fun onCreateView(view: View) {
-        viewModel = ViewModelProviders.of(activity!!)[BaseViewModel::class.java]
+        viewModel = ViewModelProviders.of(requireActivity())[BaseViewModel::class.java]
 
         iv_close = view.iv_close
         progressbar = view.progressbar
         tv_message = view.tv_message
 
         isCancelable = false
-
 
         viewModel.viewStateLiveData.observe(this, Observer {
             message = it.message
@@ -49,7 +49,10 @@ class ProgressBottomSheet : BaseBottomSheetDialogFragment() {
             }
         })
 
-        iv_close.setOnClickListener { this@ProgressBottomSheet.dismiss() }
+        iv_close.setOnClickListener {
+            this@ProgressBottomSheet.dismiss()
+            onCancelled()
+        }
     }
 
     private fun showLoading() {

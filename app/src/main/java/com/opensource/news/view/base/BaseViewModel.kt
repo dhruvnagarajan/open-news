@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
 /**
- * @author Dhruvaraj Nagarajan
+ * @author dhruvaraj
  */
 open class BaseViewModel @Inject constructor() : ViewModel() {
 
@@ -46,4 +46,10 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     enum class ViewStateType {
         NONE, LOADING, ERROR
     }
+
+    data class State<T : Any>(
+        val isLoading: Boolean = false,
+        val data: T? = null,
+        val message: String? = null
+    )
 }

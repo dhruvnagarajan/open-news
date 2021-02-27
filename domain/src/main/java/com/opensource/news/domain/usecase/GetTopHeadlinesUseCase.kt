@@ -11,9 +11,12 @@ import io.reactivex.Observable
  * @author Dhruvaraj Nagarajan
  */
 class GetTopHeadlinesUseCase(private val newsRepository: NewsRepository) :
-    UseCase<GetTopHeadlinesUseCase.Params, BaseResponse<NewsResponse>> {
-    override fun execute(params: Params): Observable<BaseResponse<NewsResponse>> {
-        return newsRepository.getTopHeadlines(params)
+    UseCase<Unit, BaseResponse<NewsResponse>> {
+
+    override fun execute(unit: Unit): Observable<BaseResponse<NewsResponse>> {
+        return newsRepository.getConfig().flatMap {
+            newsRepository.getTopHeadlines(it)
+        }
     }
 
     data class Params(
