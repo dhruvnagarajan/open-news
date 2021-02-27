@@ -4,6 +4,9 @@ Android native app that fetches top headlines from **newsapi.**
 
 ### App: [download from Google Drive](https://drive.google.com/open?id=1bYp9-hvdfaI2_zOTwnpvz4GtQZiDbeyC)
 
+<img src="screenshots/home.png" height="500" />
+<img src="screenshots/settings.png" height="500" />
+
 # Architecture
 
 - The app is built with `CLEAN` and `MVVM`.
